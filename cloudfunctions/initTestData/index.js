@@ -24,6 +24,8 @@ const venuesData = [
     facilities: ['空调', '照明', '更衣室', '饮水机'],
     rules: '1. 请穿运动鞋入场\n2. 请爱护场地设施\n3. 请勿携带食物入场',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -42,6 +44,8 @@ const venuesData = [
     facilities: ['照明', '观众席'],
     rules: '1. 雨天暂停开放\n2. 请穿运动鞋入场',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -60,6 +64,8 @@ const venuesData = [
     facilities: ['空调', '照明', '更衣室', '球拍租借'],
     rules: '1. 请穿专业羽毛球鞋\n2. 可租借球拍（10元/副）',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -78,6 +84,8 @@ const venuesData = [
     facilities: ['空调', '照明', '更衣室'],
     rules: '1. 请穿专业羽毛球鞋',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -96,6 +104,9 @@ const venuesData = [
     facilities: ['恒温', '淋浴间', '更衣室', '储物柜', '救生员'],
     rules: '1. 请佩戴泳帽\n2. 入池前请淋浴\n3. 禁止跳水\n4. 儿童需家长陪同',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
+    needApproval: true,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -114,6 +125,8 @@ const venuesData = [
     facilities: ['空调', '照明', '球拍租借'],
     rules: '1. 请爱护球台\n2. 可租借球拍（5元/副）',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -132,6 +145,8 @@ const venuesData = [
     facilities: ['空调', '淋浴间', '更衣室', '储物柜', '饮水机'],
     rules: '1. 请穿运动服装\n2. 使用器材后请归位\n3. 大重量训练请有人保护',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -150,6 +165,8 @@ const venuesData = [
     facilities: ['照明', '观众席', '休息区'],
     rules: '1. 请穿网球鞋\n2. 雨天暂停开放',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -168,6 +185,8 @@ const venuesData = [
     facilities: ['空调', '镜子', '瑜伽垫', '更衣室'],
     rules: '1. 请保持安静\n2. 请勿穿鞋入内\n3. 请提前10分钟到场',
     status: 'available',
+    enabled: true,
+    slotDuration: 60,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   },
@@ -186,6 +205,8 @@ const venuesData = [
     facilities: ['照明', '更衣室', '观众席'],
     rules: '1. 请穿足球鞋\n2. 禁止携带钉鞋',
     status: 'maintenance',
+    enabled: false,
+    slotDuration: 120,
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   }
