@@ -182,7 +182,9 @@ const throttle = (fn, interval = 300) => {
  * 预约状态映射
  */
 const bookingStatusMap = {
-  pending: { text: '待确认', class: 'status-pending' },
+  pending: { text: '待审核', class: 'status-pending' },
+  approved: { text: '已通过', class: 'status-confirmed' },
+  rejected: { text: '已拒绝', class: 'status-cancelled' },
   confirmed: { text: '已确认', class: 'status-confirmed' },
   cancelled: { text: '已取消', class: 'status-cancelled' },
   completed: { text: '已完成', class: 'status-completed' }
@@ -209,7 +211,8 @@ const venueTypeMap = {
   swimming: { text: '游泳池', icon: '🏊' },
   gym: { text: '健身房', icon: '🏋️' },
   football: { text: '足球场', icon: '⚽' },
-  tabletennis: { text: '乒乓球', icon: '🏓' },
+  table_tennis: { text: '乒乓球', icon: '🏓' },
+  yoga: { text: '瑜伽室', icon: '🧘' },
   other: { text: '其他', icon: '🏟️' }
 }
 

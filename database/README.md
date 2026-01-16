@@ -7,7 +7,7 @@
 ```json
 {
   "_id": "自动生成",
-  "openid": "微信openid",
+  "_openid": "微信openid",
   "nickName": "用户昵称",
   "avatarUrl": "头像URL",
   "phone": "手机号（可选）",
@@ -18,13 +18,13 @@
 ```
 
 **索引**:
-- `openid` (唯一)
+- `_openid` (唯一)
 
 **权限规则**:
 ```json
 {
-  "read": "auth.openid == doc.openid || doc.isAdmin == true",
-  "write": "auth.openid == doc.openid"
+  "read": "auth.openid == doc._openid || doc.isAdmin == true",
+  "write": "auth.openid == doc._openid"
 }
 ```
 
@@ -69,7 +69,7 @@
 ```json
 {
   "_id": "自动生成",
-  "openid": "用户openid",
+  "_openid": "用户openid",
   "venueId": "场馆ID",
   "venueName": "场馆名称（冗余）",
   "date": "预约日期 YYYY-MM-DD",
@@ -86,7 +86,7 @@
 ```
 
 **索引**:
-- `openid`
+- `_openid`
 - `venueId`
 - `date`
 - `status`
@@ -95,8 +95,8 @@
 **权限规则**:
 ```json
 {
-  "read": "auth.openid == doc.openid",
-  "write": "auth.openid == doc.openid"
+  "read": "auth.openid == doc._openid",
+  "write": "auth.openid == doc._openid"
 }
 ```
 
@@ -105,22 +105,24 @@
 ```json
 {
   "_id": "自动生成",
-  "openid": "用户openid",
+  "_openid": "用户openid",
   "plateNumber": "车牌号",
   "ownerName": "车主姓名",
   "phone": "联系电话",
-  "type": "类型：regular/visitor/reservation",
+  "type": "类型：visitor/reserve",
   "typeName": "类型中文名",
-  "visitReason": "来访事由（访客）",
+  "purpose": "来访目的（访客）",
   "visitee": "被访人（访客）",
   "expectedTime": "预计到达时间（访客）",
   "reserveDate": "预约日期（车位预约）",
   "reserveStartTime": "预约开始时间",
   "reserveEndTime": "预约结束时间",
   "spaceNumber": "车位号",
-  "status": "状态：pending/in/out/reserved/cancelled/expired",
+  "status": "状态：pending/entered/exited/cancelled/expired",
   "entryTime": "入场时间",
   "exitTime": "出场时间",
+  "duration": "停车时长（分钟）",
+  "qrCode": "入场二维码",
   "remark": "备注",
   "createTime": "创建时间",
   "updateTime": "更新时间"
@@ -128,7 +130,7 @@
 ```
 
 **索引**:
-- `openid`
+- `_openid`
 - `plateNumber`
 - `status`
 - `type`
@@ -137,8 +139,8 @@
 **权限规则**:
 ```json
 {
-  "read": "auth.openid == doc.openid",
-  "write": "auth.openid == doc.openid"
+  "read": "auth.openid == doc._openid",
+  "write": "auth.openid == doc._openid"
 }
 ```
 

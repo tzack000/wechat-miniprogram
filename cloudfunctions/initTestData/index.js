@@ -209,7 +209,7 @@ const parkingConfigData = {
 // 示例用户数据
 const usersData = [
   {
-    openid: 'test_admin_openid_001',
+    _openid: 'test_admin_openid_001',
     nickName: '管理员张三',
     avatarUrl: '',
     phone: '13800138001',
@@ -218,7 +218,7 @@ const usersData = [
     updateTime: db.serverDate()
   },
   {
-    openid: 'test_user_openid_001',
+    _openid: 'test_user_openid_001',
     nickName: '用户李四',
     avatarUrl: '',
     phone: '13800138002',
@@ -227,7 +227,7 @@ const usersData = [
     updateTime: db.serverDate()
   },
   {
-    openid: 'test_user_openid_002',
+    _openid: 'test_user_openid_002',
     nickName: '用户王五',
     avatarUrl: '',
     phone: '13800138003',
@@ -249,7 +249,7 @@ const generateBookingsData = (venueIds, userOpenids) => {
     const dateStr = pastDate.toISOString().split('T')[0]
     
     bookings.push({
-      odid: userOpenids[i % 2 === 0 ? 1 : 2],
+      _openid: userOpenids[i % 2 === 0 ? 1 : 2],
       venueId: venueIds[i % venueIds.length],
       venueName: venuesData[i % venuesData.length].name,
       date: dateStr,
@@ -270,7 +270,7 @@ const generateBookingsData = (venueIds, userOpenids) => {
   const futureDateStr = futureDate.toISOString().split('T')[0]
   
   bookings.push({
-    openid: userOpenids[1],
+    _openid: userOpenids[1],
     venueId: venueIds[0],
     venueName: venuesData[0].name,
     date: futureDateStr,
@@ -285,7 +285,7 @@ const generateBookingsData = (venueIds, userOpenids) => {
   })
   
   bookings.push({
-    openid: userOpenids[2],
+    _openid: userOpenids[2],
     venueId: venueIds[2],
     venueName: venuesData[2].name,
     date: futureDateStr,
@@ -309,30 +309,32 @@ const generateParkingRecordsData = (userOpenids) => {
   
   // 当前在场车辆
   records.push({
-    openid: userOpenids[1],
+    _openid: userOpenids[1],
     plateNumber: '粤A12345',
     ownerName: '李四',
     phone: '13800138002',
-    type: 'regular',
+    type: 'visitor',
     typeName: '日常登记',
+    purpose: '员工车辆',
     entryTime: db.serverDate(),
     exitTime: null,
-    status: 'in',
+    status: 'entered',
     remark: '员工车辆',
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   })
   
   records.push({
-    openid: userOpenids[2],
+    _openid: userOpenids[2],
     plateNumber: '粤B67890',
     ownerName: '王五',
     phone: '13800138003',
-    type: 'regular',
+    type: 'visitor',
     typeName: '日常登记',
+    purpose: '',
     entryTime: db.serverDate(),
     exitTime: null,
-    status: 'in',
+    status: 'entered',
     remark: '',
     createTime: db.serverDate(),
     updateTime: db.serverDate()
@@ -340,13 +342,13 @@ const generateParkingRecordsData = (userOpenids) => {
   
   // 访客预约
   records.push({
-    openid: userOpenids[1],
+    _openid: userOpenids[1],
     plateNumber: '粤C11111',
     ownerName: '访客张先生',
     phone: '13900139001',
     type: 'visitor',
     typeName: '访客登记',
-    visitReason: '业务洽谈',
+    purpose: '业务洽谈',
     visitee: '李四',
     expectedTime: db.serverDate(),
     status: 'pending',
@@ -361,17 +363,17 @@ const generateParkingRecordsData = (userOpenids) => {
   tomorrow.setHours(9, 0, 0, 0)
   
   records.push({
-    openid: userOpenids[2],
+    _openid: userOpenids[2],
     plateNumber: '粤D22222',
     ownerName: '王五',
     phone: '13800138003',
-    type: 'reservation',
+    type: 'reserve',
     typeName: '车位预约',
     reserveDate: tomorrow.toISOString().split('T')[0],
     reserveStartTime: '09:00',
     reserveEndTime: '12:00',
     spaceNumber: 'A-15',
-    status: 'reserved',
+    status: 'pending',
     remark: '明天上午开会需要车位',
     createTime: db.serverDate(),
     updateTime: db.serverDate()
@@ -383,15 +385,17 @@ const generateParkingRecordsData = (userOpenids) => {
     pastDate.setDate(pastDate.getDate() - i)
     
     records.push({
-      openid: userOpenids[1],
+      _openid: userOpenids[1],
       plateNumber: '粤A12345',
       ownerName: '李四',
       phone: '13800138002',
-      type: 'regular',
+      type: 'visitor',
       typeName: '日常登记',
+      purpose: '',
       entryTime: new Date(pastDate.setHours(8, 30, 0, 0)),
       exitTime: new Date(pastDate.setHours(18, 0, 0, 0)),
-      status: 'out',
+      status: 'exited',
+      duration: 570,
       remark: '',
       createTime: db.serverDate(),
       updateTime: db.serverDate()
