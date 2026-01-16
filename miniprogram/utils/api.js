@@ -136,10 +136,27 @@ const parkingApi = {
   updateConfig: (config) => callFunction('parking', 'updateConfig', { config })
 }
 
+// ==================== 管理员相关 API ====================
+
+const adminApi = {
+  // 将自己设为管理员（需要密钥）
+  setSelfAdmin: (secretKey) => callFunction('admin', 'setSelfAdmin', { secretKey }),
+  
+  // 将指定用户设为管理员（需要密钥）
+  setAdmin: (targetOpenid, secretKey) => callFunction('admin', 'setAdmin', { targetOpenid, secretKey }),
+  
+  // 获取管理员列表
+  getAdminList: () => callFunction('admin', 'getAdminList'),
+  
+  // 移除管理员
+  removeAdmin: (targetOpenid) => callFunction('admin', 'removeAdmin', { targetOpenid })
+}
+
 module.exports = {
   callFunction,
   userApi,
   venueApi,
   bookingApi,
-  parkingApi
+  parkingApi,
+  adminApi
 }
