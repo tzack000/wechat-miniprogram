@@ -39,7 +39,7 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false
   },
-  "appid": "wxxxxxxxxxxx",
+  "appid": "wxf5c638586169a8c5",
   "projectname": "venue-parking-miniprogram",
   "libVersion": "2.19.4",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
