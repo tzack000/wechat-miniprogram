@@ -1,0 +1,117 @@
+<!--pages/admin/settings/settings.wxml-->
+<view class="container">
+  <!-- 非管理员界面 -->
+  <view class="non-admin" wx:if="{{!isAdmin && !loading}}">
+    <view class="icon-box">
+      <text class="icon">🔐</text>
+    </view>
+    <view class="title">管理员设置</view>
+    <view class="desc">您当前不是管理员，需要使用管理员密钥进行授权</view>
+    
+    <view class="action-box" wx:if="{{!showSecretInput}}">
+      <button class="btn-primary" bindtap="showSecretInput">输入管理员密钥</button>
+    </view>
+    
+    <view class="secret-input-box" wx:if="{{showSecretInput}}">
+      <input 
+        class="secret-input" 
+        type="text" 
+        password="{{true}}"
+        placeholder="请输入管理员密钥" 
+        value="{{secretKey}}"
+        bindinput="onSecretKeyInput"
+      />
+      <view class="btn-group">
+        <button class="btn-cancel" bindtap="hideSecretInput">取消</button>
+        <button class="btn-confirm" bindtap="setSelfAdmin">确认授权</button>
+      </view>
+    </view>
+    
+    <view class="tips">
+      <view class="tips-title">提示：</view>
+      <view class="tips-item">1. 管理员密钥由系统管理员提供</view>
+      <view class="tips-item">2. 获得授权后可管理场馆、预约和停车</view>
+      <view class="tips-item">3. 密钥请妥善保管，不要泄露给他人</view>
+    </view>
+  </view>
+
+  <!-- 管理员界面 -->
+  <view class="admin-panel" wx:if="{{isAdmin && !loading}}">
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">管理员列表</text>
+        <text class="admin-count">共 {{adminList.length}} 人</text>
+      </view>
+      
+      <view class="admin-list" wx:if="{{adminList.length > 0}}">
+        <view class="admin-item" wx:for="{{adminList}}" wx:key="_id">
+          <view class="admin-info">
+            <image class="admin-avatar" src="{{item.avatarUrl || '/images/avatar-default.png'}}" mode="aspectFill"></image>
+            <view class="admin-detail">
+              <view class="admin-name">{{item.nickName || '未设置昵称'}}</view>
+              <view class="admin-phone" wx:if="{{item.phone}}">{{item.phone}}</view>
+              <view class="admin-openid" bindtap="copyOpenid" data-openid="{{item._openid}}">
+                <text>ID: {{item._openid}}</text>
+                <text class="copy-icon">📋</text>
+              </view>
+            </view>
+          </view>
+          <view class="admin-actions">
+            <button 
+              class="btn-remove" 
+              bindtap="removeAdmin" 
+              data-openid="{{item._openid}}"
+              data-name="{{item.nickName}}"
+            >移除</button>
+          </view>
+        </view>
+      </view>
+      
+      <view class="empty" wx:else>
+        <text>暂无管理员</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">添加管理员</text>
+      </view>
+      <view class="section-content">
+        <view class="add-tips">
+          <text>添加新管理员需要提供用户的 OpenID，可通过以下方式获取：</text>
+          <view class="add-tips-item">1. 让用户在小程序中登录</view>
+          <view class="add-tips-item">2. 在云开发控制台 → 数据库 → users 集合中查找</view>
+          <view class="add-tips-item">3. 复制用户的 _openid 字段值</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">管理功能</text>
+      </view>
+      <view class="menu-list">
+        <navigator url="/pages/admin/venues/venues" class="menu-item">
+          <text class="menu-icon">🏟️</text>
+          <text class="menu-text">场馆管理</text>
+          <text class="menu-arrow">›</text>
+        </navigator>
+        <navigator url="/pages/admin/bookings/bookings" class="menu-item">
+          <text class="menu-icon">📋</text>
+          <text class="menu-text">预约审批</text>
+          <text class="menu-arrow">›</text>
+        </navigator>
+        <navigator url="/pages/admin/parking/parking" class="menu-item">
+          <text class="menu-icon">🚗</text>
+          <text class="menu-text">停车管理</text>
+          <text class="menu-arrow">›</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

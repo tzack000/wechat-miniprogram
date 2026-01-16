@@ -13,7 +13,8 @@
     "pages/admin/index/index",
     "pages/admin/venues/venues",
     "pages/admin/bookings/bookings",
-    "pages/admin/parking/parking"
+    "pages/admin/parking/parking",
+    "pages/admin/settings/settings"
   ],
   "window": {
     "backgroundTextStyle": "light",

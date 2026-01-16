@@ -12,7 +12,8 @@ Page({
       { id: 'parking', icon: '🚗', title: '停车记录', url: '/pages/user/parking/parking' }
     ],
     adminMenuList: [
-      { id: 'admin', icon: '⚙️', title: '管理后台', url: '/pages/admin/index/index' }
+      { id: 'admin', icon: '⚙️', title: '管理后台', url: '/pages/admin/index/index' },
+      { id: 'admin-settings', icon: '👑', title: '管理员设置', url: '/pages/admin/settings/settings' }
     ]
   },
 
@@ -72,6 +73,26 @@ Page({
     const { url } = e.currentTarget.dataset
     if (!this.data.isLoggedIn) {
       showToast('请先登录')
+      return
+    }
+    wx.navigateTo({ url })
+  },
+
+  // 管理员入口（无需登录即可访问设置页面）
+  onAdminMenuTap(e) {
+    const { url, id } = e.currentTarget.dataset
+    // 管理员设置页面无需登录
+    if (id === 'admin-settings') {
+      wx.navigateTo({ url })
+      return
+    }
+    // 其他管理页面需要登录且是管理员
+    if (!this.data.isLoggedIn) {
+      showToast('请先登录')
+      return
+    }
+    if (!this.data.isAdmin) {
+      showToast('需要管理员权限')
       return
     }
     wx.navigateTo({ url })

@@ -1,0 +1,290 @@
+/* pages/admin/settings/settings.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+/* 非管理员界面 */
+.non-admin {
+  padding: 100rpx 40rpx;
+  text-align: center;
+}
+
+.icon-box {
+  margin-bottom: 40rpx;
+}
+
+.icon-box .icon {
+  font-size: 120rpx;
+}
+
+.non-admin .title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.non-admin .desc {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 60rpx;
+  line-height: 1.6;
+}
+
+.action-box {
+  margin-bottom: 60rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1890ff, #096dd9);
+  color: #fff;
+  border: none;
+  border-radius: 50rpx;
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+}
+
+.secret-input-box {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.secret-input {
+  width: 100%;
+  height: 88rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  margin-bottom: 30rpx;
+  box-sizing: border-box;
+}
+
+.btn-group {
+  display: flex;
+  gap: 20rpx;
+}
+
+.btn-cancel,
+.btn-confirm {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  border: none;
+}
+
+.btn-cancel {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-confirm {
+  background: #1890ff;
+  color: #fff;
+}
+
+.tips {
+  text-align: left;
+  background: #fff7e6;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-top: 40rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  color: #fa8c16;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.tips-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* 管理员界面 */
+.admin-panel {
+  padding: 20rpx;
+}
+
+.section {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.admin-count {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.section-content {
+  padding: 30rpx;
+}
+
+/* 管理员列表 */
+.admin-list {
+  padding: 0 30rpx;
+}
+
+.admin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.admin-item:last-child {
+  border-bottom: none;
+}
+
+.admin-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.admin-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  background: #f0f0f0;
+}
+
+.admin-detail {
+  flex: 1;
+  overflow: hidden;
+}
+
+.admin-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.admin-phone {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.admin-openid {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.admin-openid text:first-child {
+  max-width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-icon {
+  margin-left: 8rpx;
+  font-size: 24rpx;
+}
+
+.admin-actions {
+  margin-left: 20rpx;
+}
+
+.btn-remove {
+  background: #fff1f0;
+  color: #f5222d;
+  border: none;
+  border-radius: 8rpx;
+  padding: 12rpx 24rpx;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+/* 添加提示 */
+.add-tips {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+.add-tips-item {
+  margin-top: 12rpx;
+  padding-left: 20rpx;
+}
+
+/* 菜单列表 */
+.menu-list {
+  padding: 0 30rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 24rpx;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.menu-arrow {
+  font-size: 36rpx;
+  color: #ccc;
+}
+
+/* 空状态 */
+.empty {
+  padding: 60rpx;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 加载中 */
+.loading {
+  padding: 100rpx;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
