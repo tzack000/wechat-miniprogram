@@ -1,0 +1,87 @@
+name: Test Badge
+
+on:
+  workflow_run:
+    workflows: ["Concurrent Booking Tests"]
+    types:
+      - completed
+
+jobs:
+  badge:
+    name: 更新测试徽章
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+    
+    - name: 设置 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+    
+    - name: 安装依赖
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        elif [ -f package.json ]; then
+          npm install
+        else
+          echo "无需安装依赖"
+        fi
+    
+    - name: 运行测试并生成JSON报告
+      run: |
+        node tests/ci_test_runner.js --format json --output test-results.json --quiet
+    
+    - name: 生成测试徽章
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const results = JSON.parse(fs.readFileSync('test-results.json', 'utf8'));
+          
+          const passRate = parseFloat(results.summary.passRate);
+          let color = 'red';
+          if (passRate === 100) color = 'brightgreen';
+          else if (passRate >= 80) color = 'green';
+          else if (passRate >= 60) color = 'yellow';
+          else if (passRate >= 40) color = 'orange';
+          
+          const badge = {
+            schemaVersion: 1,
+            label: '并发测试',
+            message: results.summary.passRate,
+            color: color
+          };
+          
+          fs.writeFileSync('test-badge.json', JSON.stringify(badge, null, 2));
+          
+          console.log('徽章数据:', badge);
+    
+    - name: 创建Gist（可选）
+      if: false  # 设置为true启用，需要配置GIST_TOKEN
+      uses: exuanbo/actions-deploy-gist@v1
+      with:
+        token: ${{ secrets.GIST_TOKEN }}
+        gist_id: YOUR_GIST_ID
+        file_path: test-badge.json
+        file_type: text
+    
+    - name: 提交徽章数据（备选方案）
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        mkdir -p .github/badges
+        mv test-badge.json .github/badges/
+        
+        git add .github/badges/test-badge.json || true
+        
+        if git diff --cached --quiet; then
+          echo "没有变化，跳过提交"
+        else
+          git commit -m "chore: 更新测试徽章数据 [skip ci]"
+          git push
+        fi
