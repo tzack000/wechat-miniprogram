@@ -1,0 +1,209 @@
+<!--并发预约测试页面-->
+<view class="container">
+  <view class="header">
+    <text class="title">并发预约测试工具</text>
+    <text class="subtitle">测试课程预约的并发安全性和名额控制</text>
+  </view>
+
+  <!-- 测试配置 -->
+  <view class="section card">
+    <view class="section-title">测试配置</view>
+    
+    <view class="config-item">
+      <text class="label">并发数量：</text>
+      <input 
+        class="input"
+        type="number"
+        value="{{concurrency}}"
+        bindinput="onConcurrencyChange"
+        placeholder="输入并发数"
+      />
+      <text class="hint">（建议10-50）</text>
+    </view>
+
+    <view class="config-item" wx:if="{{testScheduleId}}">
+      <text class="label">测试排期ID：</text>
+      <text class="schedule-id">{{testScheduleId}}</text>
+    </view>
+  </view>
+
+  <!-- 测试步骤 -->
+  <view class="section card">
+    <view class="section-title">测试步骤</view>
+    
+    <view class="steps">
+      <view class="step">
+        <view class="step-number">1</view>
+        <view class="step-content">
+          <text class="step-title">创建测试排期</text>
+          <text class="step-desc">创建一个只有10个名额的排期</text>
+          <button 
+            class="step-btn"
+            type="primary"
+            bindtap="setupTest"
+            size="mini"
+          >
+            创建测试排期
+          </button>
+        </view>
+      </view>
+
+      <view class="step">
+        <view class="step-number">2</view>
+        <view class="step-content">
+          <text class="step-title">运行并发测试</text>
+          <text class="step-desc">模拟{{concurrency}}个用户同时预约</text>
+          <button 
+            class="step-btn"
+            type="primary"
+            bindtap="runTest"
+            disabled="{{!testScheduleId || testing}}"
+            loading="{{testing}}"
+            size="mini"
+          >
+            {{testing ? '测试中...' : '开始测试'}}
+          </button>
+        </view>
+      </view>
+
+      <view class="step">
+        <view class="step-number">3</view>
+        <view class="step-content">
+          <text class="step-title">检查结果</text>
+          <text class="step-desc">验证数据一致性和名额控制</text>
+          <button 
+            class="step-btn"
+            bindtap="checkResults"
+            disabled="{{!testScheduleId}}"
+            size="mini"
+          >
+            检查结果
+          </button>
+        </view>
+      </view>
+
+      <view class="step">
+        <view class="step-number">4</view>
+        <view class="step-content">
+          <text class="step-title">清理数据</text>
+          <text class="step-desc">删除测试排期和预约记录</text>
+          <button 
+            class="step-btn"
+            bindtap="cleanup"
+            disabled="{{!testScheduleId}}"
+            size="mini"
+          >
+            清理测试数据
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 测试结果 -->
+  <view class="section card" wx:if="{{testResults}}">
+    <view class="section-title">
+      <text>测试结果</text>
+      <text class="result-badge {{testResults.validation.testPassed ? 'passed' : 'failed'}}">
+        {{testResults.validation.testPassed ? '✓ 通过' : '✗ 失败'}}
+      </text>
+    </view>
+
+    <view class="result-grid">
+      <view class="result-item">
+        <text class="result-label">并发数</text>
+        <text class="result-value">{{testResults.testConfig.concurrency}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">最大人数</text>
+        <text class="result-value">{{testResults.testConfig.maxStudents}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">测试用时</text>
+        <text class="result-value">{{testResults.testConfig.duration}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">成功次数</text>
+        <text class="result-value success">{{testResults.results.successCount}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">失败次数</text>
+        <text class="result-value">{{testResults.results.failCount}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">错误次数</text>
+        <text class="result-value error">{{testResults.results.errorCount}}</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="validation-section">
+      <text class="validation-title">验证结果</text>
+      <view class="validation-list">
+        <view class="validation-item {{testResults.validation.noOverbooking ? 'pass' : 'fail'}}">
+          <text class="icon">{{testResults.validation.noOverbooking ? '✓' : '✗'}}</text>
+          <text class="text">无超额预约</text>
+          <text class="detail">（{{testResults.finalState.actualBookings}} / {{testResults.testConfig.maxStudents}}）</text>
+        </view>
+        <view class="validation-item {{testResults.validation.dataConsistent ? 'pass' : 'fail'}}">
+          <text class="icon">{{testResults.validation.dataConsistent ? '✓' : '✗'}}</text>
+          <text class="text">数据一致性</text>
+          <text class="detail">（排期{{testResults.finalState.bookedCount}} = 记录{{testResults.finalState.actualBookings}}）</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="details-section">
+      <text class="details-title">详细记录（共{{testResults.details.length}}条）</text>
+      <scroll-view class="details-scroll" scroll-y>
+        <view 
+          class="detail-item"
+          wx:for="{{testResults.details}}"
+          wx:key="attempt"
+        >
+          <text class="attempt">尝试{{item.attempt}}</text>
+          <text class="status {{item.status === '成功' ? 'success' : 'fail'}}">{{item.status}}</text>
+          <text class="message">{{item.message}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 测试历史 -->
+  <view class="section card" wx:if="{{testHistory.length > 0}}">
+    <view class="section-title">测试历史</view>
+    <view class="history-list">
+      <view 
+        class="history-item"
+        wx:for="{{testHistory}}"
+        wx:key="timestamp"
+      >
+        <view class="history-header">
+          <text class="history-time">{{item.timestamp}}</text>
+          <text class="history-badge {{item.passed ? 'passed' : 'failed'}}">
+            {{item.passed ? '通过' : '失败'}}
+          </text>
+        </view>
+        <view class="history-info">
+          <text>并发: {{item.concurrency}}</text>
+          <text>用时: {{item.duration}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="section card info-section">
+    <view class="section-title">测试说明</view>
+    <view class="info-content">
+      <text class="info-item">• 本工具用于测试课程预约的并发安全性</text>
+      <text class="info-item">• 测试会创建一个只有10个名额的排期</text>
+      <text class="info-item">• 模拟多个用户同时预约，验证名额控制</text>
+      <text class="info-item">• 通过标准：无超额预约 + 数据一致</text>
+      <text class="info-item">• 建议并发数设置为10-50进行测试</text>
+    </view>
+  </view>
+</view>

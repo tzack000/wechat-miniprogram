@@ -1,0 +1,14 @@
+{
+  "name": "initAllTestData",
+  "version": "1.0.0",
+  "description": "统一的测试数据初始化云函数 - 整合场馆、课程、教练等所有测试数据",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

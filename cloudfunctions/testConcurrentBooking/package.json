@@ -1,0 +1,9 @@
+{
+  "name": "testConcurrentBooking",
+  "version": "1.0.0",
+  "description": "并发预约测试云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

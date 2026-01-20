@@ -1,0 +1,382 @@
+/* 并发测试页面样式 */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 30rpx;
+}
+
+.header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 配置区域 */
+.config-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  font-size: 28rpx;
+}
+
+.config-item:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  color: #666;
+  min-width: 180rpx;
+}
+
+.input {
+  flex: 1;
+  height: 64rpx;
+  padding: 0 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+}
+
+.hint {
+  color: #999;
+  font-size: 24rpx;
+  margin-left: 16rpx;
+}
+
+.schedule-id {
+  flex: 1;
+  font-size: 24rpx;
+  color: #1aad19;
+  word-break: break-all;
+}
+
+/* 测试步骤 */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.step {
+  display: flex;
+  gap: 20rpx;
+}
+
+.step-number {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background-color: #1aad19;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.step-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.step-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.step-btn {
+  margin-top: 12rpx;
+}
+
+/* 测试结果 */
+.result-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.result-badge.passed {
+  background-color: #e8f4ea;
+  color: #1aad19;
+}
+
+.result-badge.failed {
+  background-color: #fff0f0;
+  color: #ff4d4f;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+}
+
+.result-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.result-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.result-value.success {
+  color: #1aad19;
+}
+
+.result-value.error {
+  color: #ff4d4f;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #e5e5e5;
+  margin: 30rpx 0;
+}
+
+/* 验证结果 */
+.validation-section {
+  margin-bottom: 30rpx;
+}
+
+.validation-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.validation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.validation-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  background-color: #f5f5f5;
+}
+
+.validation-item.pass {
+  background-color: #e8f4ea;
+}
+
+.validation-item.fail {
+  background-color: #fff0f0;
+}
+
+.validation-item .icon {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-right: 16rpx;
+}
+
+.validation-item.pass .icon {
+  background-color: #1aad19;
+  color: #fff;
+}
+
+.validation-item.fail .icon {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+.validation-item .text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.validation-item .detail {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 详细记录 */
+.details-section {
+  margin-top: 30rpx;
+}
+
+.details-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.details-scroll {
+  max-height: 600rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+  padding: 20rpx;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 24rpx;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.attempt {
+  min-width: 100rpx;
+  color: #666;
+}
+
+.status {
+  min-width: 80rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  text-align: center;
+}
+
+.status.success {
+  background-color: #e8f4ea;
+  color: #1aad19;
+}
+
+.status.fail {
+  background-color: #fff0f0;
+  color: #ff4d4f;
+}
+
+.message {
+  flex: 1;
+  color: #999;
+}
+
+/* 测试历史 */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.history-item {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.history-time {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.history-badge {
+  padding: 4rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+}
+
+.history-badge.passed {
+  background-color: #e8f4ea;
+  color: #1aad19;
+}
+
+.history-badge.failed {
+  background-color: #fff0f0;
+  color: #ff4d4f;
+}
+
+.history-info {
+  display: flex;
+  gap: 30rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 说明区域 */
+.info-section {
+  background-color: #fffbe6;
+  border: 1rpx solid #ffe58f;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.info-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}

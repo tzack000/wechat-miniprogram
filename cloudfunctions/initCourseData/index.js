@@ -148,7 +148,7 @@ async function initCourses(coachIds) {
       maxStudents: 15,
       coachIds: [coachIds[0]], // 张教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/yoga1.jpg'],
+      images: ['images/courses/yoga_1.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -163,7 +163,7 @@ async function initCourses(coachIds) {
       maxStudents: 12,
       coachIds: [coachIds[0]], // 张教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/yoga2.jpg'],
+      images: ['images/courses/yoga_2.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -178,7 +178,22 @@ async function initCourses(coachIds) {
       maxStudents: 8,
       coachIds: [coachIds[1]], // 李教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/swim1.jpg'],
+      images: ['images/courses/swimming_1.jpg'],
+      enabled: true,
+      createTime: now,
+      updateTime: now
+    },
+    {
+      name: '蛙泳提高课',
+      type: 'swimming',
+      typeName: '游泳',
+      description: '针对有蛙泳基础的学员，纠正动作细节，提升游泳速度和效率。',
+      duration: 60,
+      price: 120,
+      maxStudents: 8,
+      coachIds: [coachIds[1]], // 李教练
+      venueId: null,
+      images: ['images/courses/swimming_2.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -193,7 +208,22 @@ async function initCourses(coachIds) {
       maxStudents: 10,
       coachIds: [coachIds[2]], // 王教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/basketball1.jpg'],
+      images: ['images/courses/basketball_1.jpg'],
+      enabled: true,
+      createTime: now,
+      updateTime: now
+    },
+    {
+      name: '篮球战术进阶',
+      type: 'basketball',
+      typeName: '篮球',
+      description: '学习篮球进攻和防守战术，提升团队配合能力。',
+      duration: 90,
+      price: 180,
+      maxStudents: 10,
+      coachIds: [coachIds[2]], // 王教练
+      venueId: null,
+      images: ['images/courses/basketball_2.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -208,7 +238,7 @@ async function initCourses(coachIds) {
       maxStudents: 1,
       coachIds: [coachIds[3]], // 刘教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/fitness1.jpg'],
+      images: ['images/courses/fitness_1.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -223,7 +253,7 @@ async function initCourses(coachIds) {
       maxStudents: 20,
       coachIds: [coachIds[3]], // 刘教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/fitness2.jpg'],
+      images: ['images/courses/fitness_2.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -238,7 +268,7 @@ async function initCourses(coachIds) {
       maxStudents: 15,
       coachIds: [coachIds[4]], // 陈教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/dance1.jpg'],
+      images: ['images/courses/dance_1.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now
@@ -253,7 +283,7 @@ async function initCourses(coachIds) {
       maxStudents: 15,
       coachIds: [coachIds[4]], // 陈教练
       venueId: null,
-      images: ['cloud://prod-xxx.7072-prod-xxx/courses/dance2.jpg'],
+      images: ['images/courses/dance_2.jpg'],
       enabled: true,
       createTime: now,
       updateTime: now

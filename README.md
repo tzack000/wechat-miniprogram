@@ -98,45 +98,52 @@ wx.cloud.init({
 
 ### 7. 部署云函数
 
+**必需的业务云函数：**
 1. 在开发者工具左侧找到 `cloudfunctions` 目录
-2. 右键点击每个云函数文件夹（user、venue、booking、parking）
-3. 选择「上传并部署：云端安装依赖」
+2. 右键点击以下云函数文件夹，选择「上传并部署：云端安装依赖」
+   - `user` - 用户管理
+   - `venue` - 场馆管理
+   - `booking` - 预约管理
+   - `parking` - 停车管理
+   - `course` - 课程管理
+   - `coach` - 教练管理
 
-### 8. 初始化数据
+**测试数据初始化云函数（推荐）：**
+- `initAllTestData` - 统一的测试数据初始化（**推荐使用**）
 
-在云开发控制台的数据库中添加初始数据：
+### 8. 一键初始化测试数据 ⚡
 
-**初始化车位配置（parking_config 集合）：**
+我们提供了统一的测试数据初始化云函数，可以快速搭建完整的测试环境。
+
+#### 方式一：使用云开发控制台（推荐）
+
+1. 部署 `initAllTestData` 云函数（右键点击文件夹 → 上传并部署：云端安装依赖）
+2. 在云开发控制台 → 云函数 → 找到 `initAllTestData`
+3. 点击「测试」，输入以下参数：
+
 ```json
 {
-  "_id": "config",
-  "totalSpaces": 100,
-  "maxReserveDays": 3,
-  "maxReserveHours": 4,
-  "expireMinutes": 120
+  "action": "all",
+  "clear": true
 }
 ```
 
-**添加测试场馆（venues 集合）：**
-```json
-{
-  "name": "1号篮球场",
-  "type": "basketball",
-  "description": "标准室内篮球场，木质地板，配备空调",
-  "location": "A区体育馆1楼",
-  "images": [],
-  "facilities": ["更衣室", "淋浴间", "储物柜"],
-  "price": 100,
-  "priceUnit": "小时",
-  "openTime": "08:00",
-  "closeTime": "22:00",
-  "slotDuration": 60,
-  "maxAdvanceDays": 7,
-  "minCancelHours": 2,
-  "needApproval": false,
-  "enabled": true
-}
-```
+4. 点击「运行测试」，等待初始化完成
+
+**初始化内容：**
+- ✅ 10个场馆（篮球、羽毛球、游泳、健身等）
+- ✅ 3个测试用户（含1个管理员）
+- ✅ 5位专业教练
+- ✅ 10个课程
+- ✅ 210个课程排期（未来7天）
+- ✅ 停车配置和记录
+- ✅ 示例预约数据
+
+详细说明请查看：[测试数据初始化指南](docs/INIT_TEST_DATA.md)
+
+#### 方式二：手动添加数据
+
+如果不使用云函数初始化，可以手动在云开发控制台添加数据（不推荐，比较繁琐）。
 
 ### 9. 设置管理员
 
