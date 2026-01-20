@@ -1,0 +1,213 @@
+name: Concurrent Booking Tests
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'cloudfunctions/course/**'
+      - 'cloudfunctions/testConcurrentBooking/**'
+      - 'tests/**'
+      - '.github/workflows/concurrent-test.yml'
+  pull_request:
+    branches: [ main, master, develop ]
+    paths:
+      - 'cloudfunctions/course/**'
+      - 'cloudfunctions/testConcurrentBooking/**'
+      - 'tests/**'
+  workflow_dispatch:  # 允许手动触发
+    inputs:
+      concurrency:
+        description: '并发测试数量'
+        required: false
+        default: '20'
+
+jobs:
+  concurrent-test:
+    name: 并发预约测试
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: 安装依赖
+      run: |
+        if [ -f package.json ]; then
+          npm ci
+        else
+          npm install --save-dev jest
+        fi
+    
+    - name: 运行并发预约模拟测试
+      id: concurrent-test
+      run: |
+        echo "========================================="
+        echo "并发预约和名额控制测试"
+        echo "Node.js 版本: ${{ matrix.node-version }}"
+        echo "========================================="
+        node tests/simulate_concurrent_test.js | tee test-output.txt
+        
+        # 检查测试是否通过
+        if grep -q "所有测试通过" test-output.txt; then
+          echo "test_status=passed" >> $GITHUB_OUTPUT
+          echo "✅ 测试通过"
+        else
+          echo "test_status=failed" >> $GITHUB_OUTPUT
+          echo "❌ 测试失败"
+          exit 1
+        fi
+    
+    - name: 生成测试摘要
+      if: always()
+      run: |
+        echo "## 并发预约测试结果 🚀" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Node.js 版本**: ${{ matrix.node-version }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f test-output.txt ]; then
+          echo "### 测试输出" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -n 30 test-output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**状态**: ${{ steps.concurrent-test.outputs.test_status }}" >> $GITHUB_STEP_SUMMARY
+    
+    - name: 上传测试输出
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-output-node-${{ matrix.node-version }}
+        path: test-output.txt
+        retention-days: 30
+    
+    - name: 评论PR（如果是PR）
+      if: github.event_name == 'pull_request' && always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const output = fs.readFileSync('test-output.txt', 'utf8');
+          const status = '${{ steps.concurrent-test.outputs.test_status }}';
+          const emoji = status === 'passed' ? '✅' : '❌';
+          
+          // 提取关键信息
+          const lines = output.split('\n');
+          const summaryStart = lines.findIndex(l => l.includes('总结报告'));
+          const summary = summaryStart >= 0 ? lines.slice(summaryStart, summaryStart + 15).join('\n') : '';
+          
+          const comment = `## ${emoji} 并发预约测试报告
+          
+**Node.js 版本**: ${{ matrix.node-version }}
+**状态**: ${status === 'passed' ? '通过' : '失败'}
+
+### 测试摘要
+
+\`\`\`
+${summary}
+\`\`\`
+
+<details>
+<summary>查看完整输出</summary>
+
+\`\`\`
+${output.slice(-2000)}
+\`\`\`
+
+</details>
+
+---
+*由 GitHub Actions 自动生成*`;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  code-quality:
+    name: 代码质量检查
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+    
+    - name: 设置 Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+    
+    - name: 检查代码格式
+      run: |
+        echo "检查JavaScript代码格式..."
+        
+        # 检查测试文件
+        if [ -d tests ]; then
+          find tests -name "*.js" -type f | while read file; do
+            echo "检查: $file"
+            node -c "$file" || exit 1
+          done
+        fi
+        
+        # 检查云函数
+        if [ -d cloudfunctions ]; then
+          find cloudfunctions -name "*.js" -type f | while read file; do
+            echo "检查: $file"
+            node -c "$file" || exit 1
+          done
+        fi
+        
+        echo "✅ 代码格式检查通过"
+    
+    - name: 统计代码行数
+      run: |
+        echo "## 代码统计 📊" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 测试代码" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        find tests -name "*.js" -exec wc -l {} + | tail -1 >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 云函数代码" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        find cloudfunctions -name "*.js" -exec wc -l {} + | tail -1 >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+
+  notification:
+    name: 测试完成通知
+    runs-on: ubuntu-latest
+    needs: [concurrent-test, code-quality]
+    if: always()
+    
+    steps:
+    - name: 生成总结报告
+      run: |
+        echo "## 🎯 CI/CD 流水线完成" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**并发测试**: ${{ needs.concurrent-test.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "**代码质量**: ${{ needs.code-quality.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ "${{ needs.concurrent-test.result }}" == "success" ] && [ "${{ needs.code-quality.result }}" == "success" ]; then
+          echo "### ✅ 所有检查通过！" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "代码可以安全合并。" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### ⚠️ 存在失败的检查" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "请检查失败的任务并修复问题。" >> $GITHUB_STEP_SUMMARY
+        fi

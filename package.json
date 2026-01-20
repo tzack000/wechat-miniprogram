@@ -1,0 +1,42 @@
+{
+  "name": "wechat-venue-parking-miniprogram",
+  "version": "1.0.0",
+  "description": "微信小程序 - 场馆预约和停车管理系统",
+  "scripts": {
+    "test": "node tests/simulate_concurrent_test.js",
+    "test:ci": "node tests/ci_test_runner.js",
+    "test:json": "node tests/ci_test_runner.js --format json --output test-results.json",
+    "test:junit": "node tests/ci_test_runner.js --format junit --output test-results.xml",
+    "test:markdown": "node tests/ci_test_runner.js --format markdown --output TEST_REPORT.md",
+    "test:quiet": "node tests/ci_test_runner.js --quiet",
+    "test:verbose": "node tests/ci_test_runner.js --verbose",
+    "test:scenario": "node tests/ci_test_runner.js --scenario",
+    "test:watch": "nodemon --watch tests --watch cloudfunctions/course --exec npm test",
+    "lint": "echo 'Running lint...' && find . -name '*.js' -not -path './node_modules/*' -not -path './.git/*' -exec node -c {} \\;",
+    "lint:fix": "echo 'Lint fix is not configured yet'",
+    "coverage": "echo 'Coverage is not configured yet'",
+    "validate": "npm run lint && npm run test",
+    "prepare": "echo 'Prepare hook'",
+    "prepush": "npm run validate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tzack000/wechat-venue-parking-miniprogram.git"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "venue",
+    "parking",
+    "booking",
+    "concurrent"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
