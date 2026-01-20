@@ -171,6 +171,146 @@
 }
 ```
 
+### 6. coaches - 教练信息
+
+```json
+{
+  "_id": "自动生成",
+  "name": "教练姓名",
+  "avatar": "头像URL",
+  "title": "职称/头衔",
+  "introduction": "个人简介",
+  "specialties": ["擅长领域数组"],
+  "certifications": ["资质证书数组"],
+  "rating": 5.0,
+  "enabled": true,
+  "createTime": "创建时间",
+  "updateTime": "更新时间"
+}
+```
+
+**索引**:
+- `enabled`
+- `specialties`
+
+**权限规则**:
+```json
+{
+  "read": true,
+  "write": false
+}
+```
+
+### 7. courses - 课程信息
+
+```json
+{
+  "_id": "自动生成",
+  "name": "课程名称",
+  "type": "课程类型：yoga/swimming/basketball/fitness/dance/other",
+  "typeName": "类型中文名",
+  "description": "课程描述",
+  "duration": 60,
+  "price": 100,
+  "maxStudents": 20,
+  "coachIds": ["可授课的教练ID数组"],
+  "venueId": "关联场馆ID（可选）",
+  "images": ["课程图片URL数组"],
+  "enabled": true,
+  "createTime": "创建时间",
+  "updateTime": "更新时间"
+}
+```
+
+**索引**:
+- `type`
+- `enabled`
+- `coachIds`
+
+**权限规则**:
+```json
+{
+  "read": true,
+  "write": false
+}
+```
+
+### 8. course_schedules - 课程排期
+
+```json
+{
+  "_id": "自动生成",
+  "courseId": "课程ID",
+  "coachId": "教练ID",
+  "date": "日期 YYYY-MM-DD",
+  "startTime": "开始时间 HH:mm",
+  "endTime": "结束时间 HH:mm",
+  "venueId": "场馆ID（可选）",
+  "maxStudents": 20,
+  "bookedCount": 0,
+  "status": "状态：available/full/cancelled",
+  "createTime": "创建时间",
+  "updateTime": "更新时间"
+}
+```
+
+**索引**:
+- `courseId`
+- `coachId`
+- `date`
+- `status`
+- 复合索引: `courseId + date`
+- 复合索引: `coachId + date`
+
+**权限规则**:
+```json
+{
+  "read": true,
+  "write": false
+}
+```
+
+### 9. course_bookings - 课程预约记录
+
+```json
+{
+  "_id": "自动生成",
+  "_openid": "用户openid",
+  "scheduleId": "排期ID",
+  "courseId": "课程ID",
+  "courseName": "课程名称（冗余）",
+  "coachId": "教练ID",
+  "coachName": "教练姓名（冗余）",
+  "date": "日期 YYYY-MM-DD",
+  "startTime": "开始时间 HH:mm",
+  "endTime": "结束时间 HH:mm",
+  "status": "状态：pending/confirmed/cancelled/completed",
+  "userName": "预约人姓名",
+  "userPhone": "预约人电话",
+  "remark": "备注",
+  "createTime": "创建时间",
+  "updateTime": "更新时间"
+}
+```
+
+**索引**:
+- `_openid`
+- `scheduleId`
+- `courseId`
+- `coachId`
+- `date`
+- `status`
+- 复合索引: `_openid + status`
+- 复合索引: `scheduleId + _openid` (唯一，防止重复预约)
+
+**权限规则**:
+```json
+{
+  "read": "auth.openid == doc._openid",
+  "write": "auth.openid == doc._openid"
+}
+```
+
 ---
 
 ## 测试数据
@@ -265,12 +405,16 @@ wx.cloud.callFunction({
 1. 登录微信开发者工具
 2. 打开云开发控制台（点击工具栏"云开发"按钮）
 3. 进入数据库管理
-4. 点击"+"创建以下5个集合：
+4. 点击"+"创建以下9个集合：
    - `users`
    - `venues`
    - `bookings`
    - `parking_records`
    - `parking_config`
+   - `coaches`
+   - `courses`
+   - `course_schedules`
+   - `course_bookings`
 5. 为每个集合设置相应的权限规则
 
 ---
@@ -339,5 +483,37 @@ await db.collection('users').where({
 {
   "read": true,
   "write": false
+}
+```
+
+**coaches 集合**:
+```json
+{
+  "read": true,
+  "write": false
+}
+```
+
+**courses 集合**:
+```json
+{
+  "read": true,
+  "write": false
+}
+```
+
+**course_schedules 集合**:
+```json
+{
+  "read": true,
+  "write": false
+}
+```
+
+**course_bookings 集合**:
+```json
+{
+  "read": "doc.openid == auth.openid",
+  "write": "doc.openid == auth.openid"
 }
 ```

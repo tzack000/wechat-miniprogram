@@ -9,6 +9,7 @@ Page({
     isAdmin: false,
     menuList: [
       { id: 'bookings', icon: '📋', title: '我的预约', url: '/pages/user/bookings/bookings' },
+      { id: 'courses', icon: '📚', title: '我的课程', url: '/pages/user/courses/courses' },
       { id: 'parking', icon: '🚗', title: '停车记录', url: '/pages/user/parking/parking' }
     ],
     adminMenuList: [

@@ -7,9 +7,13 @@
     "duration": 60,
     "price": 88,
     "maxStudents": 15,
-    "coachIds": ["COACH_ID_1_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_1_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/yoga1.png"],
+    "images": [
+      "images/courses/yoga_1.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -22,9 +26,13 @@
     "duration": 75,
     "price": 108,
     "maxStudents": 12,
-    "coachIds": ["COACH_ID_1_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_1_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/yoga2.png"],
+    "images": [
+      "images/courses/yoga_2.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -37,9 +45,13 @@
     "duration": 60,
     "price": 120,
     "maxStudents": 8,
-    "coachIds": ["COACH_ID_2_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_2_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/swim1.png"],
+    "images": [
+      "images/courses/swimming_1.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -52,9 +64,13 @@
     "duration": 60,
     "price": 120,
     "maxStudents": 8,
-    "coachIds": ["COACH_ID_2_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_2_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/swim2.png"],
+    "images": [
+      "images/courses/swimming_2.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -67,9 +83,13 @@
     "duration": 90,
     "price": 150,
     "maxStudents": 10,
-    "coachIds": ["COACH_ID_3_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_3_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/basketball1.png"],
+    "images": [
+      "images/courses/basketball_1.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -82,9 +102,13 @@
     "duration": 90,
     "price": 180,
     "maxStudents": 10,
-    "coachIds": ["COACH_ID_3_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_3_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/basketball2.png"],
+    "images": [
+      "images/courses/basketball_2.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -97,9 +121,13 @@
     "duration": 60,
     "price": 200,
     "maxStudents": 1,
-    "coachIds": ["COACH_ID_4_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_4_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/fitness1.png"],
+    "images": [
+      "images/courses/fitness_1.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -112,9 +140,13 @@
     "duration": 45,
     "price": 68,
     "maxStudents": 20,
-    "coachIds": ["COACH_ID_4_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_4_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/fitness2.png"],
+    "images": [
+      "images/courses/fitness_2.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -127,9 +159,13 @@
     "duration": 60,
     "price": 98,
     "maxStudents": 15,
-    "coachIds": ["COACH_ID_5_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_5_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/dance1.png"],
+    "images": [
+      "images/courses/dance_1.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
@@ -142,9 +178,13 @@
     "duration": 60,
     "price": 98,
     "maxStudents": 15,
-    "coachIds": ["COACH_ID_5_PLACEHOLDER"],
+    "coachIds": [
+      "COACH_ID_5_PLACEHOLDER"
+    ],
     "venueId": null,
-    "images": ["https://mmbiz.qpic.cn/mmbiz_png/dance2.png"],
+    "images": [
+      "images/courses/dance_2.jpg"
+    ],
     "enabled": true,
     "createTime": "2026-01-01T10:00:00.000Z",
     "updateTime": "2026-01-01T10:00:00.000Z"
