@@ -14,6 +14,10 @@
       <view class="action-icon venue-icon">🏟️</view>
       <view class="action-text">场馆预约</view>
     </view>
+    <view class="action-item" bindtap="goToCourseList">
+      <view class="action-icon course-icon">📚</view>
+      <view class="action-text">课程预约</view>
+    </view>
     <view class="action-item" bindtap="goToParking">
       <view class="action-icon parking-icon">🚗</view>
       <view class="action-text">停车登记</view>
@@ -21,10 +25,6 @@
     <view class="action-item" bindtap="goToMyBookings">
       <view class="action-icon booking-icon">📋</view>
       <view class="action-text">我的预约</view>
-    </view>
-    <view class="action-item" bindtap="goToParkingRecords">
-      <view class="action-icon record-icon">📝</view>
-      <view class="action-text">停车记录</view>
     </view>
   </view>
 

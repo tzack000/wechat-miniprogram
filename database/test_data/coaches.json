@@ -1,0 +1,62 @@
+[
+  {
+    "name": "张教练",
+    "avatar": "https://mmbiz.qpic.cn/mmbiz_png/avatar1.png",
+    "title": "高级瑜伽导师",
+    "introduction": "10年瑜伽教学经验，擅长哈他瑜伽、阴瑜伽和流瑜伽，持有国际瑜伽联盟RYT-500认证。",
+    "specialties": ["瑜伽", "普拉提", "冥想"],
+    "certifications": ["国际瑜伽联盟RYT-500", "普拉提教练资格证"],
+    "rating": 4.9,
+    "enabled": true,
+    "createTime": "2026-01-01T10:00:00.000Z",
+    "updateTime": "2026-01-01T10:00:00.000Z"
+  },
+  {
+    "name": "李教练",
+    "avatar": "https://mmbiz.qpic.cn/mmbiz_png/avatar2.png",
+    "title": "游泳国家一级教练",
+    "introduction": "前省队游泳运动员，15年游泳教学经验，擅长自由泳、蛙泳、蝶泳教学。",
+    "specialties": ["游泳", "水上运动"],
+    "certifications": ["游泳国家一级教练证", "救生员资格证"],
+    "rating": 5.0,
+    "enabled": true,
+    "createTime": "2026-01-01T10:00:00.000Z",
+    "updateTime": "2026-01-01T10:00:00.000Z"
+  },
+  {
+    "name": "王教练",
+    "avatar": "https://mmbiz.qpic.cn/mmbiz_png/avatar3.png",
+    "title": "篮球职业教练",
+    "introduction": "CBA退役球员，专注青少年篮球培训，擅长篮球基本功和战术训练。",
+    "specialties": ["篮球", "体能训练"],
+    "certifications": ["中国篮球协会E级教练证", "体能训练师证书"],
+    "rating": 4.8,
+    "enabled": true,
+    "createTime": "2026-01-01T10:00:00.000Z",
+    "updateTime": "2026-01-01T10:00:00.000Z"
+  },
+  {
+    "name": "刘教练",
+    "avatar": "https://mmbiz.qpic.cn/mmbiz_png/avatar4.png",
+    "title": "健身私教",
+    "introduction": "国家级健身教练，精通增肌减脂、功能性训练和康复训练。",
+    "specialties": ["健身", "增肌减脂", "康复训练"],
+    "certifications": ["国家健身教练职业资格证", "运动康复师证"],
+    "rating": 4.7,
+    "enabled": true,
+    "createTime": "2026-01-01T10:00:00.000Z",
+    "updateTime": "2026-01-01T10:00:00.000Z"
+  },
+  {
+    "name": "陈教练",
+    "avatar": "https://mmbiz.qpic.cn/mmbiz_png/avatar5.png",
+    "title": "舞蹈编导",
+    "introduction": "专业舞蹈学院毕业，擅长爵士舞、街舞、拉丁舞教学。",
+    "specialties": ["舞蹈", "爵士舞", "街舞"],
+    "certifications": ["中国舞蹈家协会教师资格证", "爵士舞考级教师证"],
+    "rating": 4.9,
+    "enabled": true,
+    "createTime": "2026-01-01T10:00:00.000Z",
+    "updateTime": "2026-01-01T10:00:00.000Z"
+  }
+]

@@ -1,0 +1,67 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" 
+           placeholder="搜索教练姓名" 
+           value="{{searchKeyword}}" 
+           bindinput="onSearchInput" />
+  </view>
+
+  <!-- 筛选标签 -->
+  <view class="filter-tabs">
+    <view class="filter-label">擅长领域：</view>
+    <scroll-view class="filter-scroll" scroll-x>
+      <view class="filter-tab {{selectedSpecialty === '' ? 'active' : ''}}" 
+            bindtap="onFilterChange" 
+            data-specialty="">
+        全部
+      </view>
+      <view class="filter-tab {{selectedSpecialty === item ? 'active' : ''}}" 
+            wx:for="{{specialties}}" 
+            wx:key="item"
+            bindtap="onFilterChange" 
+            data-specialty="{{item}}">
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 教练列表 -->
+  <view class="coach-list">
+    <view class="coach-item" 
+          wx:for="{{coachList}}" 
+          wx:key="_id"
+          bindtap="onCoachTap" 
+          data-id="{{item._id}}">
+      <image class="coach-avatar" src="{{item.avatar}}" mode="aspectFill" />
+      <view class="coach-info">
+        <view class="coach-header">
+          <text class="coach-name">{{item.name}}</text>
+          <text class="coach-title">{{item.title}}</text>
+        </view>
+        <view class="coach-specialties">
+          <text class="specialty-tag" wx:for="{{item.specialties}}" wx:key="*this" wx:for-item="specialty">
+            {{specialty}}
+          </text>
+        </view>
+        <text class="coach-intro">{{item.introduction}}</text>
+        <view class="coach-rating" wx:if="{{item.rating}}">
+          <text class="rating-score">★ {{item.rating}}</text>
+          <text class="rating-label">评分</text>
+        </view>
+      </view>
+      <view class="arrow-right">›</view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{coachList.length === 0 && !loading}}">
+    <image class="empty-icon" src="/images/empty-coach.png" mode="aspectFit" />
+    <text class="empty-text">暂无教练信息</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

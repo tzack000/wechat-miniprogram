@@ -1,0 +1,80 @@
+<!--我的课程页面-->
+<view class="container">
+  <!-- 标签栏 -->
+  <view class="tabs">
+    <view 
+      class="tab-item {{currentTab === item.value ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="value"
+      data-tab="{{item.value}}"
+      bindtap="onTabChange"
+    >
+      {{item.label}}
+    </view>
+  </view>
+
+  <!-- 预约列表 -->
+  <view class="booking-list">
+    <view 
+      class="booking-item"
+      wx:for="{{bookings}}"
+      wx:key="_id"
+    >
+      <view class="booking-header">
+        <text class="course-name">{{item.courseName}}</text>
+        <text class="status {{getStatusClass(item.status)}}">
+          {{getStatusText(item.status)}}
+        </text>
+      </view>
+
+      <view class="booking-info">
+        <view class="info-row">
+          <text class="info-label">教练：</text>
+          <text class="info-value">{{item.coachName}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">时间：</text>
+          <text class="info-value">{{item.date}} {{item.startTime}}-{{item.endTime}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">预约人：</text>
+          <text class="info-value">{{item.userName}} {{item.userPhone}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.remark}}">
+          <text class="info-label">备注：</text>
+          <text class="info-value">{{item.remark}}</text>
+        </view>
+      </view>
+
+      <view class="booking-footer" wx:if="{{item.status === 'confirmed'}}">
+        <button 
+          class="cancel-btn"
+          size="mini"
+          bindtap="onCancelBooking"
+          data-id="{{item._id}}"
+        >
+          取消预约
+        </button>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-status" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-status" wx:if="{{!loading && bookings.length === 0}}">
+      <image src="/images/empty.png" class="empty-image"></image>
+      <text class="empty-text">暂无课程预约</text>
+      <button class="go-booking-btn" bindtap="goToCourseList">
+        去预约课程
+      </button>
+    </view>
+
+    <!-- 没有更多 -->
+    <view class="no-more" wx:if="{{!loading && bookings.length > 0 && !hasMore}}">
+      <text>没有更多了</text>
+    </view>
+  </view>
+</view>

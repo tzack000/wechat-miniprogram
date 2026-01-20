@@ -1,0 +1,114 @@
+<!--课程详情页面-->
+<view class="container" wx:if="{{course}}">
+  <!-- 课程头图 -->
+  <swiper class="course-swiper" indicator-dots indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#fff">
+    <swiper-item wx:for="{{course.images}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" class="course-image"></image>
+    </swiper-item>
+    <swiper-item wx:if="{{!course.images || course.images.length === 0}}">
+      <image src="/images/default-course.png" mode="aspectFill" class="course-image"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 课程信息 -->
+  <view class="course-info">
+    <view class="info-header">
+      <text class="course-name">{{course.name}}</text>
+      <text class="course-type">{{course.typeName}}</text>
+    </view>
+    <view class="info-meta">
+      <text class="meta-item">⏱ {{course.duration}}分钟</text>
+      <text class="meta-item">👥 {{course.maxStudents}}人</text>
+      <text class="meta-item price">¥{{course.price}}/次</text>
+    </view>
+    <text class="course-description">{{course.description}}</text>
+  </view>
+
+  <!-- 可授课教练 -->
+  <view class="section">
+    <view class="section-title">授课教练</view>
+    <scroll-view scroll-x class="coach-scroll">
+      <view class="coach-list">
+        <view 
+          class="coach-item {{selectedCoachId === '' ? 'active' : ''}}"
+          bindtap="onCoachSelect"
+          data-id=""
+        >
+          <text>全部</text>
+        </view>
+        <view 
+          class="coach-item {{selectedCoachId === item._id ? 'active' : ''}}"
+          wx:for="{{coaches}}"
+          wx:key="_id"
+          bindtap="onCoachSelect"
+          data-id="{{item._id}}"
+        >
+          <image class="coach-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+          <text class="coach-name">{{item.name}}</text>
+          <text class="coach-title">{{item.title}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 日期选择 -->
+  <view class="section">
+    <view class="section-title">选择日期</view>
+    <scroll-view scroll-x class="date-scroll">
+      <view class="date-list">
+        <view 
+          class="date-item {{selectedDate === item.date ? 'active' : ''}}"
+          wx:for="{{dates}}"
+          wx:key="date"
+          bindtap="onDateSelect"
+          data-date="{{item.date}}"
+        >
+          <text class="date-label">{{item.label}}</text>
+          <text class="date-weekday">{{item.weekDay}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 课程排期 -->
+  <view class="section">
+    <view class="section-title">可预约时段</view>
+    
+    <view class="schedule-list" wx:if="{{schedules.length > 0}}">
+      <view 
+        class="schedule-item {{item.status === 'full' || item.availableSeats <= 0 ? 'disabled' : ''}}"
+        wx:for="{{schedules}}"
+        wx:key="_id"
+        bindtap="onBook"
+        data-schedule="{{item}}"
+      >
+        <view class="schedule-time">
+          <text class="time">{{item.startTime}} - {{item.endTime}}</text>
+          <text class="coach-name" wx:if="{{item.coachInfo}}">{{item.coachInfo.name}}</text>
+        </view>
+        <view class="schedule-info">
+          <text class="seats" wx:if="{{item.status !== 'full' && item.availableSeats > 0}}">
+            剩余{{item.availableSeats}}个名额
+          </text>
+          <text class="status-full" wx:if="{{item.status === 'full' || item.availableSeats <= 0}}">
+            已满
+          </text>
+        </view>
+        <view class="schedule-action">
+          <text wx:if="{{item.status !== 'full' && item.availableSeats > 0}}">预约</text>
+          <text wx:else class="disabled-text">已满</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载中 -->
+    <view class="empty-status" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 无排期 -->
+    <view class="empty-status" wx:if="{{!loading && schedules.length === 0}}">
+      <text>该日期暂无可预约时段</text>
+    </view>
+  </view>
+</view>

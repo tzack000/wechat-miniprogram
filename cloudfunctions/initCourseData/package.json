@@ -1,0 +1,9 @@
+{
+  "name": "initCourseData",
+  "version": "1.0.0",
+  "description": "课程数据初始化云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

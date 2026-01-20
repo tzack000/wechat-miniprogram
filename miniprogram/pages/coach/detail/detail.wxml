@@ -1,0 +1,72 @@
+<view class="container">
+  <!-- 教练基本信息 -->
+  <view class="coach-header">
+    <image class="coach-avatar-large" src="{{coach.avatar}}" mode="aspectFill" />
+    <view class="coach-basic-info">
+      <text class="coach-name-large">{{coach.name}}</text>
+      <text class="coach-title-large">{{coach.title}}</text>
+      <view class="coach-rating" wx:if="{{coach.rating}}">
+        <text class="rating-score">★ {{coach.rating}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 擅长领域 -->
+  <view class="section">
+    <view class="section-title">擅长领域</view>
+    <view class="specialties-container">
+      <view class="specialty-badge" wx:for="{{coach.specialties}}" wx:key="*this">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 个人简介 -->
+  <view class="section">
+    <view class="section-title">个人简介</view>
+    <text class="introduction-text">{{coach.introduction}}</text>
+  </view>
+
+  <!-- 资质证书 -->
+  <view class="section" wx:if="{{coach.certifications && coach.certifications.length > 0}}">
+    <view class="section-title">资质证书</view>
+    <view class="certifications-list">
+      <view class="certification-item" wx:for="{{coach.certifications}}" wx:key="*this">
+        <text class="cert-icon">✓</text>
+        <text class="cert-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 授课课程 -->
+  <view class="section">
+    <view class="section-title">授课课程</view>
+    <view class="course-list" wx:if="{{courses.length > 0}}">
+      <view class="course-item" 
+            wx:for="{{courses}}" 
+            wx:key="_id"
+            bindtap="onCourseTap"
+            data-id="{{item._id}}">
+        <image class="course-image" src="{{item.images[0]}}" mode="aspectFill" />
+        <view class="course-info">
+          <text class="course-name">{{item.name}}</text>
+          <text class="course-type">{{item.type}}</text>
+          <view class="course-meta">
+            <text class="meta-item">时长：{{item.duration}}分钟</text>
+            <text class="meta-item">人数：最多{{item.maxStudents}}人</text>
+          </view>
+          <text class="course-price">¥{{item.price}}</text>
+        </view>
+        <view class="arrow-right">›</view>
+      </view>
+    </view>
+    <view class="empty-courses" wx:else>
+      <text>暂无授课课程</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

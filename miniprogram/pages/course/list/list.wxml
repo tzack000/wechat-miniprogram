@@ -1,0 +1,65 @@
+<!--课程列表页面-->
+<view class="container">
+  <!-- 课程类型筛选 -->
+  <view class="filter-bar">
+    <scroll-view scroll-x class="type-scroll">
+      <view class="type-list">
+        <view 
+          class="type-item {{currentType === item.value ? 'active' : ''}}"
+          wx:for="{{typeList}}"
+          wx:key="value"
+          data-type="{{item.value}}"
+          bindtap="onTypeChange"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="course-list">
+    <view 
+      class="course-item"
+      wx:for="{{courses}}"
+      wx:key="_id"
+      data-id="{{item._id}}"
+      bindtap="goToDetail"
+    >
+      <image class="course-image" src="{{item.images[0] || '/images/default-course.png'}}" mode="aspectFill"></image>
+      <view class="course-info">
+        <view class="course-header">
+          <text class="course-name">{{item.name}}</text>
+          <text class="course-type-tag">{{item.typeName}}</text>
+        </view>
+        <text class="course-desc">{{item.description}}</text>
+        <view class="course-footer">
+          <view class="course-meta">
+            <text class="duration">{{item.duration}}分钟</text>
+            <text class="max-students">{{item.maxStudents}}人</text>
+          </view>
+          <view class="course-price">
+            <text class="price-value">¥{{item.price}}</text>
+            <text class="price-unit">/次</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-status" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-status" wx:if="{{!loading && courses.length === 0}}">
+      <image src="/images/empty.png" class="empty-image"></image>
+      <text class="empty-text">暂无可预约课程</text>
+    </view>
+
+    <!-- 没有更多 -->
+    <view class="no-more" wx:if="{{!loading && courses.length > 0 && !hasMore}}">
+      <text>没有更多了</text>
+    </view>
+  </view>
+</view>

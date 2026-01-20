@@ -70,6 +70,13 @@ Page({
     })
   },
 
+  // 跳转到课程预约
+  goToCourseList() {
+    wx.navigateTo({
+      url: '/pages/course/list/list'
+    })
+  },
+
   // 跳转到停车登记
   goToParking() {
     wx.switchTab({

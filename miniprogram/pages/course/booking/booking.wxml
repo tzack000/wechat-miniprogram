@@ -1,0 +1,60 @@
+<!--课程预约确认页面-->
+<view class="container">
+  <view class="form-section">
+    <view class="section-title">预约信息</view>
+    
+    <view class="form-item">
+      <text class="label"><text class="required">*</text>预约人姓名</text>
+      <input 
+        class="input"
+        placeholder="请输入姓名"
+        value="{{userName}}"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label"><text class="required">*</text>手机号</text>
+      <input 
+        class="input"
+        type="number"
+        placeholder="请输入手机号"
+        maxlength="11"
+        value="{{userPhone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea 
+        class="textarea"
+        placeholder="有什么需要告知教练的吗？（选填）"
+        maxlength="200"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      />
+    </view>
+  </view>
+
+  <view class="tips-section">
+    <view class="tips-title">预约须知</view>
+    <view class="tips-content">
+      <text>1. 请提前10分钟到达场地</text>
+      <text>2. 如需取消请至少提前2小时</text>
+      <text>3. 请穿着运动服装和运动鞋</text>
+      <text>4. 请遵守场馆规则，听从教练安排</text>
+    </view>
+  </view>
+
+  <view class="submit-section">
+    <button 
+      class="submit-btn"
+      type="primary"
+      bindtap="onSubmit"
+      disabled="{{submitting}}"
+    >
+      {{submitting ? '提交中...' : '确认预约'}}
+    </button>
+  </view>
+</view>
