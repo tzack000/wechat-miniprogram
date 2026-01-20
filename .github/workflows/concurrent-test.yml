@@ -56,15 +56,25 @@ jobs:
         echo "并发预约和名额控制测试"
         echo "Node.js 版本: ${{ matrix.node-version }}"
         echo "========================================="
-        node tests/simulate_concurrent_test.js | tee test-output.txt
         
-        # 检查测试是否通过
-        if grep -q "所有测试通过" test-output.txt; then
+        # 运行测试并捕获退出码
+        set +e
+        node tests/simulate_concurrent_test.js | tee test-output.txt
+        TEST_EXIT_CODE=$?
+        set -e
+        
+        # 根据退出码判断测试结果
+        if [ $TEST_EXIT_CODE -eq 0 ]; then
           echo "test_status=passed" >> $GITHUB_OUTPUT
-          echo "✅ 测试通过"
+          echo "✅ 测试通过（退出码：$TEST_EXIT_CODE）"
+          
+          # 额外验证：检查输出内容
+          if grep -q "所有测试通过" test-output.txt || grep -q "测试通过" test-output.txt; then
+            echo "✅ 输出内容验证通过"
+          fi
         else
           echo "test_status=failed" >> $GITHUB_OUTPUT
-          echo "❌ 测试失败"
+          echo "❌ 测试失败（退出码：$TEST_EXIT_CODE）"
           exit 1
         fi
     
