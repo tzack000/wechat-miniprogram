@@ -109,28 +109,28 @@ jobs:
           const summaryStart = lines.findIndex(l => l.includes('总结报告'));
           const summary = summaryStart >= 0 ? lines.slice(summaryStart, summaryStart + 15).join('\n') : '';
           
-          const comment = `## ${emoji} 并发预约测试报告
+          const comment = \`## \${emoji} 并发预约测试报告
           
-**Node.js 版本**: ${{ matrix.node-version }}
-**状态**: ${status === 'passed' ? '通过' : '失败'}
-
-### 测试摘要
-
-\`\`\`
-${summary}
-\`\`\`
-
-<details>
-<summary>查看完整输出</summary>
-
-\`\`\`
-${output.slice(-2000)}
-\`\`\`
-
-</details>
-
----
-*由 GitHub Actions 自动生成*`;
+          **Node.js 版本**: \${{ matrix.node-version }}
+          **状态**: \${status === 'passed' ? '通过' : '失败'}
+          
+          ### 测试摘要
+          
+          \\\`\\\`\\\`
+          \${summary}
+          \\\`\\\`\\\`
+          
+          <details>
+          <summary>查看完整输出</summary>
+          
+          \\\`\\\`\\\`
+          \${output.slice(-2000)}
+          \\\`\\\`\\\`
+          
+          </details>
+          
+          ---
+          *由 GitHub Actions 自动生成*\`;
           
           github.rest.issues.createComment({
             issue_number: context.issue.number,
