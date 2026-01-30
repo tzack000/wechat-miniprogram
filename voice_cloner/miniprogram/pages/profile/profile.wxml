@@ -1,0 +1,4 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <view class="placeholder">个人中心页面 - 待实现</view>
+</view>

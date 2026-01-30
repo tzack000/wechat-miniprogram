@@ -1,0 +1,22 @@
+{
+  "name": "wechat-voice-cloner-miniprogram",
+  "version": "1.0.0",
+  "description": "微信语音克隆小程序 - 通过用户录制声音样本,实现个性化文本转语音",
+  "main": "miniprogram/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "voice-cloning",
+    "tts",
+    "speech-synthesis"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "miniprogram-api-typings": "^3.9.0"
+  },
+  "dependencies": {}
+}

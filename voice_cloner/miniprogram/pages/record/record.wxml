@@ -1,0 +1,169 @@
+<!--pages/record/record.wxml-->
+<view class="container">
+  <!-- 引导提示 -->
+  <view class="guide-overlay" wx:if="{{showGuide}}">
+    <view class="guide-content">
+      <view class="guide-title">录音指南</view>
+      <view class="guide-tips">
+        <view class="guide-tip">• 请在安静的环境下录音</view>
+        <view class="guide-tip">• 保持适中的音量</view>
+        <view class="guide-tip">• 跟随参考文本朗读</view>
+        <view class="guide-tip">• 建议录制1-3分钟</view>
+      </view>
+      <button class="guide-btn" bindtap="closeGuide">开始录音</button>
+    </view>
+  </view>
+  
+  <!-- 录音状态卡片 -->
+  <view class="record-card">
+    <!-- 计时器 -->
+    <view class="timer-section">
+      <view class="timer-display">{{recordingTimeDisplay}}</view>
+      <view class="timer-limit">最长 {{maxDuration / 60}} 分钟</view>
+    </view>
+    
+    <!-- 波形可视化 -->
+    <view class="waveform-container" wx:if="{{isRecording}}">
+      <view class="waveform">
+        <view 
+          class="wave-bar" 
+          wx:for="{{volumeLevels.slice(-30)}}" 
+          wx:key="index"
+          style="height: {{item}}%"
+        ></view>
+      </view>
+    </view>
+    
+    <!-- 录音状态 -->
+    <view class="status-container">
+      <view class="status-icon {{isRecording ? 'recording' : ''}}">
+        <text wx:if="{{!isRecording && !hasRecording}}">🎙️</text>
+        <text wx:if="{{isRecording && !isPaused}}">🔴</text>
+        <text wx:if="{{isPaused}}">⏸️</text>
+        <text wx:if="{{hasRecording && !isRecording}}">✓</text>
+      </view>
+      <view class="status-text">
+        <text wx:if="{{!isRecording && !hasRecording}}">准备录音</text>
+        <text wx:if="{{isRecording && !isPaused}}">录音中...</text>
+        <text wx:if="{{isPaused}}">已暂停</text>
+        <text wx:if="{{hasRecording && !isRecording}}">录音完成</text>
+      </view>
+    </view>
+    
+    <!-- 控制按钮 -->
+    <view class="control-buttons">
+      <!-- 未开始录音 -->
+      <button 
+        wx:if="{{!isRecording && !hasRecording}}"
+        class="btn-primary btn-large"
+        bindtap="startRecording"
+      >
+        开始录音
+      </button>
+      
+      <!-- 录音中 -->
+      <block wx:if="{{isRecording}}">
+        <button 
+          class="btn-secondary"
+          bindtap="{{isPaused ? 'resumeRecording' : 'pauseRecording'}}"
+        >
+          {{isPaused ? '继续' : '暂停'}}
+        </button>
+        <button 
+          class="btn-primary"
+          bindtap="stopRecording"
+        >
+          停止
+        </button>
+      </block>
+      
+      <!-- 录音完成 -->
+      <block wx:if="{{hasRecording && !isRecording}}">
+        <button 
+          class="btn-secondary"
+          bindtap="playRecording"
+          disabled="{{uploading}}"
+        >
+          播放
+        </button>
+        <button 
+          class="btn-secondary"
+          bindtap="reRecord"
+          disabled="{{uploading}}"
+        >
+          重录
+        </button>
+        <button 
+          class="btn-primary"
+          bindtap="submitRecording"
+          disabled="{{uploading}}"
+        >
+          {{uploading ? '上传中...' : '提交'}}
+        </button>
+      </block>
+    </view>
+    
+    <!-- 上传进度条 -->
+    <view class="upload-progress" wx:if="{{uploading}}">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{uploadProgress}}%"></view>
+      </view>
+      <text class="progress-text">上传进度: {{uploadProgress}}%</text>
+    </view>
+  </view>
+  
+  <!-- 参考文本 -->
+  <view class="reference-section">
+    <view class="section-title">
+      <text>📝 参考文本</text>
+      <text class="section-hint">请跟随朗读</text>
+    </view>
+    
+    <view class="reference-text">
+      <view 
+        class="text-sentence {{index === referenceTextIndex ? 'active' : ''}}"
+        wx:for="{{referenceTextSentences}}"
+        wx:key="index"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+  
+  <!-- 录音质量检测结果 -->
+  <view class="quality-section" wx:if="{{qualityChecked && qualityResult}}">
+    <view class="section-title">
+      <text>🎯 质量检测</text>
+      <text class="quality-score {{qualityResult.passed ? 'pass' : 'fail'}}">
+        {{qualityResult.score}} 分
+      </text>
+    </view>
+    
+    <view class="quality-content">
+      <view class="quality-issues">
+        <view 
+          class="quality-item {{qualityResult.passed ? 'success' : 'warning'}}"
+          wx:for="{{qualityResult.issues}}"
+          wx:key="index"
+        >
+          {{item}}
+        </view>
+      </view>
+      <view class="quality-suggestion">
+        {{qualityResult.suggestion}}
+      </view>
+    </view>
+  </view>
+  
+  <!-- 录音信息 -->
+  <view class="info-section" wx:if="{{hasRecording}}">
+    <view class="info-item">
+      <text class="info-label">录音时长</text>
+      <text class="info-value">{{recordingTimeDisplay}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">文件大小</text>
+      <text class="info-value">{{recordingSizeDisplay}}</text>
+    </view>
+  </view>
+</view>

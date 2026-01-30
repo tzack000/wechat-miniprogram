@@ -1,56 +1,50 @@
-# 依赖目录
-node_modules/
-miniprogram_npm/
-
-# 本地配置文件
-project.private.config.json
-
-# 编译输出
-dist/
-build/
-
-# 日志文件
-*.log
-npm-debug.log*
-
-# 系统文件
+# macOS
 .DS_Store
-Thumbs.db
+.AppleDouble
+.LSOverride
+
+# 微信小程序
+*.log
+node_modules/
+
+# 场馆停车小程序
+venue_parking/miniprogram/node_modules/
+venue_parking/cloudfunctions/*/node_modules/
+
+# 声音克隆小程序 - 小程序端
+voice_cloner/miniprogram/node_modules/
+voice_cloner/cloudfunctions/*/node_modules/
+
+# 声音克隆小程序 - 服务器端
+voice_cloner/voice-cloning-server/venv/
+voice_cloner/voice-cloning-server/__pycache__/
+voice_cloner/voice-cloning-server/*.pyc
+voice_cloner/voice-cloning-server/.env
+voice_cloner/voice-cloning-server/logs/
+voice_cloner/voice-cloning-server/.pytest_cache/
+
+# 模型文件（过大，不上传）
+voice_cloner/voice-cloning-server/models/*.pt
+voice_cloner/voice-cloning-server/models/*.pth
+voice_cloner/voice-cloning-server/models/*.onnx
+voice_cloner/voice-cloning-server/models/*.trt
+
+# 临时文件
+voice_cloner/voice-cloning-server/cache/
+voice_cloner/voice-cloning-server/temp/
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
-
-# 环境变量
-.env
-.env.local
-.env.*.local
+*~
 
 # 临时文件
 *.tmp
-*.temp
-.cache/
+*.bak
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# 压缩包
-*.tar.gz
-*.zip
-
-# 测试输出（不提交到仓库）
-test-results.json
-test-results.xml
-test-output.txt
-CI_TEST_REPORT.md
-TEST_REPORT.md
-*.test.log
-
-# 覆盖率报告
-coverage/
-.nyc_output/
-*.lcov
+# 系统文件
+Thumbs.db
+Desktop.ini
+ehthumbs.db

@@ -1,0 +1,4 @@
+<!--pages/audio-list/audio-list.wxml-->
+<view class="container">
+  <view class="placeholder">音频列表页面 - 待实现</view>
+</view>

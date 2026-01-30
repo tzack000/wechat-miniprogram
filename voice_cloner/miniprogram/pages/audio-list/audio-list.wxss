@@ -1,0 +1,2 @@
+/* pages/audio-list/audio-list.wxss */
+.placeholder { padding: 200rpx; text-align: center; color: #999; }

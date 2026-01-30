@@ -1,310 +1,153 @@
-# 场馆预约与停车登记微信小程序
+# 微信小程序项目集合
 
-[![Concurrent Tests](https://github.com/tzack000/wechat-venue-parking-miniprogram/actions/workflows/concurrent-test.yml/badge.svg)](https://github.com/tzack000/wechat-venue-parking-miniprogram/actions/workflows/concurrent-test.yml)
-![Node Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)
-![Test Pass Rate](https://img.shields.io/badge/tests-100%25-brightgreen)
-![Coverage](https://img.shields.io/badge/coverage-concurrent%20booking-blue)
+本仓库包含两个微信小程序项目。
 
-> 一个功能完整的场馆预约和停车管理微信小程序，支持课程预约、教练管理、并发控制等功能。
+## 项目列表
 
-## ✨ 特性
+### 1. 场馆停车小程序 (venue_parking/)
 
-- 🎯 **并发预约控制** - 高并发下精确的名额控制，100%防止超额
-- 📅 **课程管理** - 完整的课程和教练管理系统
-- 🚗 **停车登记** - 便捷的停车位预约和管理
-- 🏟️ **场馆预约** - 灵活的场馆时间段预约
-- 🔒 **数据一致性** - 事务保证的数据一致性
-- ⚡ **高性能** - 100并发响应 < 50ms
-- 🤖 **CI/CD自动化** - 每次提交自动测试，质量有保障
+场馆停车管理系统的微信小程序端。
 
-## 📚 文档导航
-
-- 🚀 **[3分钟快速部署](QUICK_DEPLOY.md)** - 新手推荐，快速上手
-- 📖 **[详细部署指南](DEPLOY_CLOUD_FUNCTION_GUIDE.md)** - 完整步骤和问题解答
-- 🎨 **[部署流程图](DEPLOY_FLOWCHART.md)** - 可视化部署流程
-- 📋 **[部署指南总览](DEPLOYMENT_SUMMARY.md)** - 根据情况选择合适的文档
-
-## 🚀 快速开始
-
-### 1. 下载项目到本地
-
-将整个 `wechat_mini_program` 文件夹下载到你的电脑。
-
-### 2. 微信开发者工具设置
-
-1. 下载并安装 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
-2. 打开微信开发者工具，选择「小程序」
-3. 点击「导入项目」
-4. 选择项目目录（包含 `project.config.json` 的文件夹）
-5. 填写 AppID（可使用测试号，或在 [微信公众平台](https://mp.weixin.qq.com/) 注册获取）
-
-### 3. 开启云开发
-
-1. 在开发者工具中，点击工具栏的「云开发」按钮
-2. 点击「开通」，按提示完成云开发环境创建
-3. 记住你的**环境ID**（如 `cloud1-xxx`）
-
-### 4. 配置环境ID
-
-修改 `miniprogram/app.js` 文件，将环境ID替换为你的实际值：
-
-```javascript
-wx.cloud.init({
-  env: 'your-env-id',  // ← 替换为你的云开发环境ID
-  traceUser: true
-})
-```
-
-### 5. 创建数据库集合
-
-在云开发控制台的「数据库」中，创建以下集合：
-
-| 集合名称 | 说明 |
-|---------|------|
-| `users` | 用户信息 |
-| `venues` | 场馆信息 |
-| `bookings` | 预约记录 |
-| `parking_records` | 停车记录 |
-| `parking_config` | 车位配置 |
-
-### 6. 设置数据库权限
-
-为每个集合设置权限规则（在集合详情页的「权限设置」中）：
-
-**users 集合：**
-```json
-{
-  "read": "auth.openid == doc._openid",
-  "write": "auth.openid == doc._openid"
-}
-```
-
-**venues 集合：**
-```json
-{
-  "read": true,
-  "write": false
-}
-```
-
-**bookings / parking_records 集合：**
-```json
-{
-  "read": "auth.openid == doc._openid",
-  "write": "auth.openid == doc._openid"
-}
-```
-
-**parking_config 集合：**
-```json
-{
-  "read": true,
-  "write": false
-}
-```
-
-### 7. 部署云函数
-
-**必需的业务云函数：**
-1. 在开发者工具左侧找到 `cloudfunctions` 目录
-2. 右键点击以下云函数文件夹，选择「上传并部署：云端安装依赖」
-   - `user` - 用户管理
-   - `venue` - 场馆管理
-   - `booking` - 预约管理
-   - `parking` - 停车管理
-   - `course` - 课程管理
-   - `coach` - 教练管理
-
-**测试数据初始化云函数（推荐）：**
-- `initAllTestData` - 统一的测试数据初始化（**推荐使用**）
-
-### 8. 一键初始化测试数据 ⚡
-
-我们提供了统一的测试数据初始化云函数，可以快速搭建完整的测试环境。
-
-#### 方式一：使用云开发控制台（推荐）
-
-1. 部署 `initAllTestData` 云函数（右键点击文件夹 → 上传并部署：云端安装依赖）
-2. 在云开发控制台 → 云函数 → 找到 `initAllTestData`
-3. 点击「测试」，输入以下参数：
-
-```json
-{
-  "action": "all",
-  "clear": true
-}
-```
-
-4. 点击「运行测试」，等待初始化完成
-
-**初始化内容：**
-- ✅ 10个场馆（篮球、羽毛球、游泳、健身等）
-- ✅ 3个测试用户（含1个管理员）
-- ✅ 5位专业教练
-- ✅ 10个课程
-- ✅ 210个课程排期（未来7天）
-- ✅ 停车配置和记录
-- ✅ 示例预约数据
-
-详细说明请查看：[测试数据初始化指南](docs/INIT_TEST_DATA.md)
-
-#### 方式二：手动添加数据
-
-如果不使用云函数初始化，可以手动在云开发控制台添加数据（不推荐，比较繁琐）。
-
-### 9. 设置管理员
-
-在 `users` 集合中找到你的用户记录，将 `isAdmin` 字段设为 `true`：
-
-```json
-{
-  "isAdmin": true
-}
-```
-
-### 10. 运行预览
-
-点击开发者工具的「编译」按钮，即可在模拟器中预览小程序。
-
----
-
-## 功能模块
-
-### 场馆预约
-- 浏览场馆列表（支持分类筛选）
-- 查看场馆详情和时段
-- 在线预约场地
-- 查看/取消预约
-
-### 停车登记
-- 访客车辆登记
-- 车位预约
-- 进出记录确认
-- 历史记录查询
-
-### 管理后台（管理员）
-- 场馆管理（增删改查）
-- 预约审核
+**功能**:
+- 停车场查询
+- 预约停车
 - 停车记录管理
 
----
+**技术栈**:
+- 微信小程序原生开发
+- 微信云开发
 
-## 技术栈
+### 2. 声音克隆小程序 (voice_cloner/)
 
-- 前端：微信小程序原生框架
-- 后端：微信云开发（云函数 + 云数据库）
-- 数据库：云数据库（MongoDB 风格）
+基于AI的声音克隆与语音合成小程序。
+
+**项目状态**: 🚧 开发中
+
+**完成进度**: 46/159 任务 (28.9%)
+
+**已完成模块**:
+- ✅ 项目初始化和配置
+- ✅ 数据库设计
+- ✅ 云存储配置
+- ✅ 用户认证系统
+- ✅ 录音模块（支持质量检测、波形显示）
+- ✅ 音频上传和格式转换
+- ✅ 语音克隆模型集成（MockingBird）
+
+**开发中**:
+- 🔄 声音特征提取服务
+- 📋 语音合成功能
+- 📋 用户声纹管理
+
+**技术栈**:
+- 前端：微信小程序 + 云开发
+- 后端：FastAPI + PyTorch
+- 模型：MockingBird (基于SV2TTS)
+
+[查看详细文档](./voice_cloner/README.md)
 
 ---
 
 ## 目录结构
 
 ```
-wechat_mini_program/
-├── miniprogram/           # 小程序前端代码
-│   ├── pages/             # 页面
-│   ├── components/        # 组件
-│   ├── utils/             # 工具函数
-│   └── images/            # 图片资源
-├── cloudfunctions/        # 云函数
-│   ├── user/              # 用户模块
-│   ├── venue/             # 场馆模块
-│   ├── booking/           # 预约模块
-│   └── parking/           # 停车模块
-├── database/              # 数据库设计文档
-└── project.config.json    # 项目配置
+wechat-miniprogram/
+├── venue_parking/           # 场馆停车小程序
+│   ├── miniprogram/        # 小程序前端
+│   ├── cloudfunctions/     # 云函数
+│   └── project.config.json
+│
+├── voice_cloner/           # 声音克隆小程序
+│   ├── miniprogram/        # 小程序前端
+│   │   ├── pages/         # 页面
+│   │   │   ├── index/     # 首页
+│   │   │   ├── record/    # 录音页
+│   │   │   ├── synthesize/# 合成页
+│   │   │   ├── audio-list/# 音频列表
+│   │   │   └── profile/   # 个人中心
+│   │   ├── app.js
+│   │   └── app.json
+│   ├── cloudfunctions/     # 云函数
+│   │   ├── audioProcess/  # 音频处理
+│   │   ├── db-init/       # 数据库初始化
+│   │   ├── extract/       # 特征提取
+│   │   ├── synthesize/    # 语音合成
+│   │   ├── upload/        # 文件上传
+│   │   ├── query/         # 数据查询
+│   │   ├── cleanup/       # 清理任务
+│   │   └── login/         # 用户登录
+│   ├── voice-cloning-server/ # API服务器
+│   │   ├── src/
+│   │   │   └── api/       # FastAPI接口
+│   │   ├── models/        # 模型文件
+│   │   ├── requirements.txt
+│   │   ├── Dockerfile
+│   │   └── README.md
+│   ├── openspec/          # 项目文档
+│   │   ├── changes/       # 任务追踪
+│   │   └── docs/          # 技术文档
+│   └── project.config.json
+│
+├── .gitignore
+└── README.md              # 本文件
 ```
 
----
+## 快速开始
 
-## 常见问题
-
-**Q: 提示「云开发环境未初始化」？**
-A: 检查 `app.js` 中的环境ID是否正确配置。
-
-**Q: 云函数调用失败？**
-A: 确保云函数已正确部署，可在云开发控制台查看日志。
-
-**Q: 数据库操作权限错误？**
-A: 检查集合的权限规则是否正确设置。
-
-**Q: tabBar图标不显示？**
-A: 确保 `images` 文件夹中的图标文件存在且路径正确。
-
----
-
-## 🧪 测试和CI/CD
-
-本项目已集成完整的自动化测试和CI/CD流程。
-
-### 测试覆盖
-
-- ✅ **并发预约控制测试** - 5个测试场景，100%通过
-- ✅ **名额限制验证** - 精确控制，零超额
-- ✅ **数据一致性检查** - 排期计数 = 实际记录
-- ✅ **性能基准测试** - 100并发 < 50ms
-- ✅ **多版本兼容** - Node.js 16/18/20
-
-### 本地测试
+### 场馆停车小程序
 
 ```bash
-# 安装依赖
-npm install
-
-# 运行所有测试
-npm test
-
-# 生成测试报告
-npm run test:markdown
-
-# CI模式运行
-npm run test:ci
+cd venue_parking
+# 使用微信开发者工具打开此目录
 ```
 
-### GitHub Actions
+### 声音克隆小程序
 
-每次代码提交会自动触发测试：
+```bash
+cd voice_cloner
+# 使用微信开发者工具打开此目录
+```
 
-- 🔄 **自动触发** - Push/PR自动运行
-- 🎯 **多版本测试** - Node.js 16/18/20并行测试
-- 📊 **测试报告** - 自动生成详细报告
-- 💬 **PR评论** - 自动在PR中评论测试结果
-- 📦 **测试产物** - 保存测试日志30天
+详细开发文档请查看各项目目录下的 README.md
 
-查看测试状态：[GitHub Actions](https://github.com/tzack000/wechat-venue-parking-miniprogram/actions)
+## 开发进度（声音克隆小程序）
 
-### 测试场景
+| 任务组 | 状态 | 进度 |
+|--------|------|------|
+| 1. 项目初始化 | ✅ | 10/10 |
+| 2. 数据库设计 | ✅ | 6/6 |
+| 3. 云存储配置 | ✅ | 4/4 |
+| 4. 用户认证 | ✅ | 6/6 |
+| 5. 录音模块 | ✅ | 10/10 |
+| 6. 音频上传 | ✅ | 6/6 |
+| 7. 模型集成 | ✅ | 8/8 |
+| 8. 特征提取 | 🔄 | 0/9 |
+| 9-16. 其他模块 | 📋 | 0/100+ |
 
-| 场景 | 并发数 | 名额 | 状态 |
-|------|--------|------|------|
-| 正常并发 | 20 | 10 | ✅ |
-| 高并发 | 50 | 10 | ✅ |
-| 极限并发 | 100 | 10 | ✅ |
-| 边界测试 | 11 | 10 | ✅ |
-| 大名额 | 50 | 30 | ✅ |
+## 贡献指南
 
-### 文档
+欢迎提交 Issue 和 Pull Request！
 
-- 📘 [CI/CD完整指南](.github/CI_CD_GUIDE.md)
-- 📗 [测试使用说明](tests/README.md)
-- 📕 [完整测试报告](tests/CONCURRENT_TEST_REPORT.md)
-- 📙 [配置总结](CI_CD_SETUP_SUMMARY.md)
+### 提交规范
 
----
+- feat: 新功能
+- fix: 修复bug
+- docs: 文档更新
+- style: 代码格式调整
+- refactor: 重构
+- test: 测试相关
+- chore: 构建/工具相关
 
-## 📄 许可证
+## 许可证
 
 MIT License
 
-## 🤝 贡献
+## 作者
 
-欢迎提交Issue和Pull Request！
+[@tzack000](https://github.com/tzack000)
 
-提交代码前请确保：
-1. 运行 `npm test` 通过所有测试
-2. 代码符合项目规范
-3. 添加必要的测试用例
+## 致谢
 
----
-
-**⭐ 如果这个项目对您有帮助，欢迎Star！**
+- 微信小程序团队
+- MockingBird 项目
+- 所有贡献者

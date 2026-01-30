@@ -1,0 +1,4 @@
+<!--pages/synthesize/synthesize.wxml-->
+<view class="container">
+  <view class="placeholder">语音合成页面 - 待实现</view>
+</view>

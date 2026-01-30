@@ -1,0 +1,2 @@
+/* pages/profile/profile.wxss */
+.placeholder { padding: 200rpx; text-align: center; color: #999; }

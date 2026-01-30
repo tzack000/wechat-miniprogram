@@ -1,0 +1,9 @@
+{
+  "name": "audioProcess",
+  "version": "1.0.0",
+  "description": "音频处理云函数 - 格式转换和验证",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

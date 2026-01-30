@@ -1,0 +1,45 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 头部欢迎区 -->
+  <view class="header">
+    <view class="welcome-text">欢迎使用语音克隆助手</view>
+    <view class="subtitle">用你的声音,说任何话</view>
+  </view>
+
+  <!-- 声纹状态卡片 -->
+  <view class="card status-card" wx:if="{{hasVoiceProfile}}">
+    <view class="status-header">
+      <text class="status-icon">✓</text>
+      <text class="status-title">声音模型状态</text>
+    </view>
+    <view class="status-content">
+      <text class="status-text" wx:if="{{voiceProfileStatus === 'ready'}}">已就绪,可以开始语音合成</text>
+      <text class="status-text" wx:if="{{voiceProfileStatus === 'processing'}}">处理中,请稍候...</text>
+      <text class="status-text" wx:if="{{voiceProfileStatus === 'failed'}}">创建失败,请重新录制</text>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="features">
+    <view 
+      class="feature-item" 
+      wx:for="{{features}}" 
+      wx:key="id"
+      data-path="{{item.path}}"
+      bindtap="navigateTo"
+    >
+      <view class="feature-icon">{{item.icon}}</view>
+      <view class="feature-info">
+        <view class="feature-title">{{item.title}}</view>
+        <view class="feature-desc">{{item.desc}}</view>
+      </view>
+      <view class="feature-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 引导提示 -->
+  <view class="guide-tip" wx:if="{{!hasVoiceProfile}}">
+    <view class="tip-icon">💡</view>
+    <view class="tip-text">首次使用请先录制您的声音样本</view>
+  </view>
+</view>
