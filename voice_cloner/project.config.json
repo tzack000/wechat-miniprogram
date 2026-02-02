@@ -44,7 +44,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.4",
+  "libVersion": "3.13.2",
   "appid": "wxf5c638586169a8c5",
   "projectname": "wechat-voice-cloner-miniprogram",
   "condition": {

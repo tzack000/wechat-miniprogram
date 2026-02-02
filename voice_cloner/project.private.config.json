@@ -1,6 +1,6 @@
 {
   "libVersion": "3.13.2",
-  "projectname": "wechat-voice-cloner-miniprogram",
+  "projectname": "voice_cloner",
   "condition": {},
   "setting": {
     "urlCheck": true,
