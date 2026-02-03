@@ -21,9 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt \
 
 # 复制应用代码
 COPY src/ ./src/
-COPY models/ ./models/
 
-# 创建日志目录
+# 创建模型和日志目录（模拟模式下不需要真实模型文件）
+RUN mkdir -p /app/models/encoder /app/models/synthesizer /app/models/vocoder
 RUN mkdir -p /app/logs
 
 # 暴露端口
