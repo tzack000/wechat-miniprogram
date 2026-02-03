@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# 环境配置
+.env
+.env.local
+
+# 日志
+logs/
+*.log
+
+# 模型文件（太大，不上传）
+models/*.pt
+models/*.pth
+models/*.onnx
+models/encoder/*.pt
+models/synthesizer/*.pt
+models/vocoder/*.pt
+
+# 测试输出
+output_*.wav
+test_audio.wav
+cloned.wav
+synthesized.wav
+*.wav
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 缓存
+cache/
+temp/
+tmp/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
