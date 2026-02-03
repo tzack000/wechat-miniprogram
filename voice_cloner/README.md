@@ -62,6 +62,26 @@ wechat-voice-cloner-miniprogram/
 
 ```
 
+## 🌐 部署环境说明
+
+**重要**: 本项目主要在中国大陆部署，网络环境有特殊要求。
+
+### 部署约束
+- **部署地区**: 中国大陆
+- **云服务商**: 腾讯云 CVM
+- **操作系统**: Debian 12 (bookworm) / Ubuntu 20.04+
+- **网络要求**: 需要使用国内镜像源（Docker、PyPI、npm）
+
+### ⚠️ 关键注意事项
+
+1. **Docker 安装**: 必须使用 `install_docker_china.sh`（使用国内镜像源）
+2. **包管理**: 所有依赖安装都应使用国内镜像源
+3. **网络限制**: GitHub、Docker Hub 等国外源访问可能不稳定
+
+详细约束和解决方案请参考: [部署约束文档](DEPLOYMENT_CONSTRAINTS.md)
+
+---
+
 ## 快速开始
 
 ### 前置要求
@@ -70,6 +90,7 @@ wechat-voice-cloner-miniprogram/
 - Python >= 3.8
 - 微信开发者工具
 - 微信小程序账号(AppID)
+- **中国大陆服务器**（推荐腾讯云 CVM）
 
 ### 安装步骤
 
@@ -176,6 +197,47 @@ npm install
 查看完整的开发进度、技术债务和行动计划:
 - 📊 [开发进度报告](DEVELOPMENT_PROGRESS.md)
 - 📋 [详细任务清单](openspec/changes/wechat-voice-cloner-miniprogram/tasks.md)
+- 🌐 [部署约束文档](DEPLOYMENT_CONSTRAINTS.md) - **中国部署必读**
+
+## 🚀 后端部署指南
+
+### 快速部署（腾讯云 CVM）
+
+```bash
+# 1. 连接服务器
+ssh root@YOUR_SERVER_IP
+
+# 2. 克隆代码
+cd /opt
+git clone https://github.com/tzack000/wechat-miniprogram.git
+cd wechat-miniprogram/voice_cloner/voice-cloning-server
+
+# 3. 安装 Docker（使用国内镜像源）
+chmod +x install_docker_china.sh
+sudo ./install_docker_china.sh
+
+# 4. 配置环境变量
+nano .env.production
+# 修改 API_KEY 和 ALLOWED_ORIGINS
+
+# 5. 部署应用
+docker compose build
+docker compose up -d
+
+# 6. 验证部署
+curl http://localhost:8000/health
+```
+
+### 部署文档
+
+| 文档 | 说明 |
+|------|------|
+| [DEPLOYMENT_CONSTRAINTS.md](DEPLOYMENT_CONSTRAINTS.md) | 中国网络环境约束（必读） |
+| [SECURITY_GROUP_GUIDE.md](voice-cloning-server/SECURITY_GROUP_GUIDE.md) | 安全组配置指南 |
+| [TENCENT_CLOUD_DEPLOYMENT.md](voice-cloning-server/TENCENT_CLOUD_DEPLOYMENT.md) | 完整部署指南 |
+| [API_TEST_REPORT.md](voice-cloning-server/API_TEST_REPORT.md) | API 测试报告 |
+
+---
 
 ## 数据库设计
 
