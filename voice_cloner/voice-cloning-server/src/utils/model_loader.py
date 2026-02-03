@@ -10,7 +10,7 @@
 import numpy as np
 from loguru import logger
 from typing import Optional
-import torch
+# import torch  # Mock模式下不需要torch
 
 
 class MockEncoder:
