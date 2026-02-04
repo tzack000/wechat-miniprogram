@@ -21,8 +21,8 @@ class MockEncoder:
     
     def __init__(self, model_path: Optional[str] = None):
         self.model_path = model_path
-        self.is_loaded = False
-        logger.info("初始化 Mock Encoder")
+        self.is_loaded = True  # Mock 模式下自动标记为已加载
+        logger.info("初始化 Mock Encoder (自动加载)")
     
     def load_model(self, model_path: str):
         """加载模型"""
@@ -76,8 +76,8 @@ class MockSynthesizer:
     
     def __init__(self, model_path: Optional[str] = None):
         self.model_path = model_path
-        self.is_loaded = False
-        logger.info("初始化 Mock Synthesizer")
+        self.is_loaded = True  # Mock 模式下自动标记为已加载
+        logger.info("初始化 Mock Synthesizer (自动加载)")
     
     def load_model(self, model_path: str):
         """加载模型"""
@@ -128,8 +128,8 @@ class MockVocoder:
     
     def __init__(self, model_path: Optional[str] = None):
         self.model_path = model_path
-        self.is_loaded = False
-        logger.info("初始化 Mock Vocoder")
+        self.is_loaded = True  # Mock 模式下自动标记为已加载
+        logger.info("初始化 Mock Vocoder (自动加载)")
     
     def load_model(self, model_path: str):
         """加载模型"""
