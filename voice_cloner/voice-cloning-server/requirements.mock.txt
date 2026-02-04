@@ -1,0 +1,17 @@
+# FastAPI 和 Web 服务器
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# 数据处理和验证
+pydantic==2.5.0
+python-dotenv==1.0.0
+
+# 日志
+loguru==0.7.2
+
+# Mock 模式必需的基础库
+numpy==1.24.3
+
+# 轻量级音频处理（Mock 模式只需基础功能）
+# 注意：不包含 scipy, librosa 等重量级库
