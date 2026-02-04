@@ -15,9 +15,20 @@ RUN apt-get update && apt-get install -y \
 # 复制依赖文件
 COPY requirements.txt .
 
-# 安装Python依赖
-RUN pip install --no-cache-dir -r requirements.txt \
-    -i https://pypi.tuna.tsinghua.edu.cn/simple
+# 安装Python依赖（使用多镜像源，增加超时和重试）
+RUN pip install --upgrade pip && \
+    pip config set global.timeout 300 && \
+    pip install --no-cache-dir -r requirements.txt \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    --trusted-host pypi.tuna.tsinghua.edu.cn \
+    --retries 5 \
+    --timeout 300 \
+    -v || \
+    pip install --no-cache-dir -r requirements.txt \
+    -i https://mirrors.aliyun.com/pypi/simple/ \
+    --trusted-host mirrors.aliyun.com \
+    --retries 5 \
+    --timeout 300
 
 # 复制应用代码
 COPY src/ ./src/
