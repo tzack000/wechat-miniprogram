@@ -37,12 +37,24 @@
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "compileWorklet": false,
+    "localPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "appid": "wxf5c638586169a8c5",
   "projectname": "venue-parking-miniprogram",
   "libVersion": "2.19.4",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "condition": {},
-  "description": "场馆预约与停车登记微信小程序"
+  "description": "场馆预约与停车登记微信小程序",
+  "compileType": "miniprogram",
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {}
 }
