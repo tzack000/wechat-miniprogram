@@ -84,8 +84,17 @@ async function setAdmin(targetOpenid, secretKey) {
 // 将当前用户设为管理员（需要密钥验证）
 async function setSelfAdmin(openid, secretKey) {
   try {
+    // 环境变量未配置时拒绝操作
+    if (!ADMIN_SECRET_KEY) {
+      return {
+        success: false,
+        message: '服务器配置错误，请联系管理员配置 ADMIN_SECRET_KEY 环境变量'
+      }
+    }
+
     // 验证密钥
     if (secretKey !== ADMIN_SECRET_KEY) {
+      console.warn(`[安全警告] 管理员密钥验证失败 - openid: ${openid}`)
       return {
         success: false,
         message: '密钥错误'
